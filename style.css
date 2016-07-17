@@ -1,6 +1,10 @@
-@import 'https://fonts.googleapis.com/css?family=Raleway';
+@import 'https://fonts.googleapis.com/css?family=Raleway:400,700';
 
 body {
   font-family: "Raleway";
   max-width: 1000px;
+}
+
+h1,h2,h3,h4 {
+  font-weight: 700;
 }
