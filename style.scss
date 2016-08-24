@@ -1,0 +1,51 @@
+@import 'https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700, 700i';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Space Mono";
+  background-image: url(./congruent_outline.png);
+  color: #efefef;
+}
+
+header {
+  text-align: center;
+  ul{
+    list-style: none;
+    li{
+      display: inline-block;
+      font-size: 24px;
+    }
+  }
+}
+
+.main-container {
+  max-width: 800px;
+  padding: 50px;
+  background: rgba(1, 1, 1, .5);
+  margin: 40px auto;
+  // position: relative;
+}
+
+h1,h2,h3,h4 {
+  font-weight: 700;
+  margin: 0;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+a {
+  color: #EA3939;
+  text-decoration: none;
+  font-style: italic;
+  font-weight: 700;
+  transition: color .5s;
+}
+
+a:hover{
+  color: white;
+}
