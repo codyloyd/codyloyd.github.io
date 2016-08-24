@@ -7,7 +7,18 @@
 body {
   font-family: "Space Mono";
   background-image: url(./congruent_outline.png);
+  background-attachment: fixed;
   color: #efefef;
+}
+
+.photo {
+  width: 100%;
+  text-align: center;
+  img{
+    width: 150px;
+    margin: auto;
+    border-radius: 50%;
+  }
 }
 
 header {
@@ -26,7 +37,9 @@ header {
   padding: 50px;
   background: rgba(1, 1, 1, .5);
   margin: 40px auto;
-  // position: relative;
+  -webkit-box-shadow: 0px 0px 61px 0px rgba(0,0,0,0.71);
+  -moz-box-shadow: 0px 0px 61px 0px rgba(0,0,0,0.71);
+  box-shadow: 0px 0px 61px 0px rgba(0,0,0,0.71);
 }
 
 h1,h2,h3,h4 {
