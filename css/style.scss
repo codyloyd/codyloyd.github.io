@@ -22,6 +22,10 @@ body {
   }
 }
 
+.center {
+  text-align: center;
+  margin-bottom: 20px;
+}
 header {
   text-align: center;
   ul{
@@ -70,16 +74,45 @@ a:hover{
 }
 
 .projects {
-  text-align: center;
-  ul {
-    list-style: none;
-    width: 90%;
-    margin: auto;
-    padding: none;
-    li {
+  .tabs{
+    height: 250px;
+    position: relative;
+    #tablabels{
+      height: 250px;
+      display: inline-block;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 20%;
+      .selectedtab {
+        color:white;
+      }
+      li {
+        color: #EA3939;
+        text-decoration: none;
+        font-style: italic;
+        font-weight: 700;
+        transition: color .5s;
+        &:hover {
+          color:white;
+        }
+      }
+    }
+    #tabcontents{
+      position: absolute;
+      display: inline-block;
+      top:0;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 80%;
       text-align: center;
-      border: 1px solid #777777;
-      margin-bottom: 25px;
+      a{
+        font-size: 24px;
+      }
+      .hidden{
+        display: none;
+      }
     }
   }
 }

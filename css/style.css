@@ -17,6 +17,10 @@ body {
     margin: auto;
     border-radius: 50%; }
 
+.center {
+  text-align: center;
+  margin-bottom: 20px; }
+
 header {
   text-align: center; }
   header ul {
@@ -55,16 +59,38 @@ a:hover {
   font-family: "Open Sans";
   line-height: 1.5; }
 
-.projects {
-  text-align: center; }
-  .projects ul {
-    list-style: none;
-    width: 90%;
-    margin: auto;
-    padding: none; }
-    .projects ul li {
-      text-align: center;
-      border: 1px solid #777777;
-      margin-bottom: 25px; }
+.projects .tabs {
+  height: 250px;
+  position: relative; }
+  .projects .tabs #tablabels {
+    height: 250px;
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 20%; }
+    .projects .tabs #tablabels .selectedtab {
+      color: white; }
+    .projects .tabs #tablabels li {
+      color: #EA3939;
+      text-decoration: none;
+      font-style: italic;
+      font-weight: 700;
+      transition: color .5s; }
+      .projects .tabs #tablabels li:hover {
+        color: white; }
+  .projects .tabs #tabcontents {
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    text-align: center; }
+    .projects .tabs #tabcontents a {
+      font-size: 24px; }
+    .projects .tabs #tabcontents .hidden {
+      display: none; }
 
 /*# sourceMappingURL=style.css.map */

@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>Cody Loyd</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="./js/projects.js" charset="utf-8"></script>
   </head>
   <body>
     <div class="main-container">
@@ -16,25 +18,52 @@
           <li><a href="#">contact</a></li>
         </ul>
       </header>
-      <div class="projects">
-        <h3>A Selection of Coding Projects</h3>
-        <h4>See all the rest on <a href="https://github.com/codyloyd">github</a></h2>
-        <ul>
-          <li>
-            <a href="gridsequencer/">gridSeq</a><br>
-            A little toy for creating musical loops, with the ability to implement a little randomness for interest.<br> built with javascript using the Tone.js library.
-          </li>
-          <li>
-            <a href="https://teacher-notes-app.herokuapp.com/">Anecdotal Notes</a><br>
-            A Rails app for teachers.  The intention is to allow teachers to quickly enter tagged notes about student's progress during class as he or she walks around the room.  The site is fully responsive so it works well on whatever device the teacher has available.
-          </li>
-          <li><a href="https://subtle-wording-4567.herokuapp.com/">Word Game</a></li>
-          <li><a href="https://crafty-breaker-4567.herokuapp.com/">CodeBreaker</a></li>
-          <li><a href="https://cdn.rawgit.com/codyloyd/jsimageslider/master/index.html">Javascript Image Slider</a></li>
-          <li><a href="https://rawgit.com/codyloyd/NYT_clone/master/article.html">New York Times article clone</a></li>
-          <li><a href="https://rawgit.com/codyloyd/javascriptSnake/master/snake.html">Javascript Snake Game</a></li>
-        </ul>
+
+    <div class="projects">
+        <h2 class="center">A Selection of Coding Projects</h2>
+        <div class="tabs">
+          <ul id="tablabels">
+            <li id="label1" target="tab1" class="selectedtab">gridSeq</li>
+            <li id="label2" target="tab2">Anecdotal Notes</li>
+            <li id="label3" target="tab3">Word Game</li>
+            <li id="label4" target="tab4">CodeBreaker</li>
+            <li id="label5" target="tab5">JS Image Slider</li>
+            <li id="label6" target="tab6">NYT Clone</li>
+            <li id="label7" target="tab7">JS Snake Game</li>
+          </ul>
+          <ul id="tabcontents">
+            <li id="tab1" class="visible">
+              <a href="gridsequencer/">gridSeq</a><br>
+              A little toy for creating musical loops, with the ability to implement a little randomness for interest.<br> built with javascript using the Tone.js library.
+            </li>
+            <li id="tab2" class="hidden">
+              <a href="https://teacher-notes-app.herokuapp.com/">Anecdotal Notes</a><br>
+              A Rails app for teachers.  The intention is to allow teachers to quickly enter tagged notes about student's progress during class as he or she walks around the room.  The site is fully responsive so it works well on whatever device the teacher has available.
+            </li>
+            <li id="tab3" class="hidden">
+              <a href="https://subtle-wording-4567.herokuapp.com/">Word Game</a><br>
+              Just a hangman-like game.  Guess letters, figure out the word.  Built with Ruby and Sinatra.
+            </li>
+            <li id="tab4" class="hidden">
+              <a href="https://crafty-breaker-4567.herokuapp.com/">CodeBreaker</a><br>
+              This one is a clone of the classic board game <em>Mastermind.</em>  Guess numbers and follow the clues to break the code. (watch out for duplicate numbers!)
+            </li>
+            <li id="tab5" class="hidden">
+              <a href="https://cdn.rawgit.com/codyloyd/jsimageslider/master/index.html">Javascript Image Slider</a><br>
+              A pretty basic image slider built in Javascript.
+            </li>
+            <li id="tab6" class="hidden">
+              <a href="https://rawgit.com/codyloyd/NYT_clone/master/article.html">New York Times article clone</a><br>
+              Created as a test of my HTML/CSS skills, this is a clone of an article on the New York Times website. You can see the original article <a href="http://www.nytimes.com/2014/03/18/science/space/detection-of-waves-in-space-buttresses-landmark-theory-of-big-bang.html?_r=4">here</a>.
+            </li>
+            <li id="tab7" class="hidden">
+              <a href="https://rawgit.com/codyloyd/javascriptSnake/master/snake.html">Javascript Snake Game</a><br>
+              THE CLASSIC.  It's snake... you eat food, you grow.. don't hit the walls.
+            </li>
+          </ul>
+        </div>
       </div>
+      <h4 class="center">See all the rest on <a href="https://github.com/codyloyd">github</a></h2>
       <div class="photo"><img src="images/littleme.jpg" alt=""></div>
     </div>
   </body>
