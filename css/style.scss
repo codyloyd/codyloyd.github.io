@@ -68,3 +68,18 @@ a:hover{
   font-family: "Open Sans";
   line-height: 1.5;
 }
+
+.projects {
+  text-align: center;
+  ul {
+    list-style: none;
+    width: 90%;
+    margin: auto;
+    padding: none;
+    li {
+      text-align: center;
+      border: 1px solid #777777;
+      margin-bottom: 25px;
+    }
+  }
+}
