@@ -30,6 +30,8 @@ header {
   text-align: center;
   ul{
     list-style: none;
+    margin: 0;
+    padding: 0;
     li{
       display: inline-block;
       font-size: 24px;
@@ -78,7 +80,7 @@ a:hover{
     border-bottom: 3px solid #aaaaaa;
   }
   .tabs{
-    height: 250px;
+    height: 340px;
     position: relative;
     #tablabels{
       height: 250px;
@@ -96,6 +98,8 @@ a:hover{
         font-style: italic;
         font-weight: 700;
         transition: color .5s;
+        margin-bottom: 28px;
+        line-height: 1;
         &:hover {
           color:white;
         }
@@ -110,8 +114,16 @@ a:hover{
       padding: 0;
       width: 80%;
       text-align: center;
+      .text {
+        font-family: "Open Sans";
+        font-size: 18px;
+        a {
+          font-size: 18px;
+          font-weight: 400;
+        }
+      }
       a{
-        font-size: 24px;
+        font-size: 20px;
       }
       .hidden{
         display: none;

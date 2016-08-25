@@ -24,7 +24,9 @@ body {
 header {
   text-align: center; }
   header ul {
-    list-style: none; }
+    list-style: none;
+    margin: 0;
+    padding: 0; }
     header ul li {
       display: inline-block;
       font-size: 24px; }
@@ -62,7 +64,7 @@ a:hover {
 .projects .projects-header {
   border-bottom: 3px solid #aaaaaa; }
 .projects .tabs {
-  height: 250px;
+  height: 340px;
   position: relative; }
   .projects .tabs #tablabels {
     height: 250px;
@@ -78,7 +80,9 @@ a:hover {
       text-decoration: none;
       font-style: italic;
       font-weight: 700;
-      transition: color .5s; }
+      transition: color .5s;
+      margin-bottom: 28px;
+      line-height: 1; }
       .projects .tabs #tablabels li:hover {
         color: white; }
   .projects .tabs #tabcontents {
@@ -90,8 +94,14 @@ a:hover {
     padding: 0;
     width: 80%;
     text-align: center; }
+    .projects .tabs #tabcontents .text {
+      font-family: "Open Sans";
+      font-size: 18px; }
+      .projects .tabs #tabcontents .text a {
+        font-size: 18px;
+        font-weight: 400; }
     .projects .tabs #tabcontents a {
-      font-size: 24px; }
+      font-size: 20px; }
     .projects .tabs #tabcontents .hidden {
       display: none; }
 
