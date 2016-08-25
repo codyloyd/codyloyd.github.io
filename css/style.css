@@ -48,7 +48,7 @@ h1 {
   font-size: 60px; }
 
 a {
-  color: #EA3939;
+  color: #DA3C3C;
   text-decoration: none;
   font-style: italic;
   font-weight: 700;
@@ -62,10 +62,12 @@ a:hover {
   line-height: 1.5; }
 
 .projects .projects-header {
+  margin-top: -20px;
   border-bottom: 3px solid #aaaaaa; }
 .projects .tabs {
-  height: 340px;
-  position: relative; }
+  height: 360px;
+  position: relative;
+  margin-top: 60px; }
   .projects .tabs #tablabels {
     height: 250px;
     display: inline-block;
@@ -76,7 +78,7 @@ a:hover {
     .projects .tabs #tablabels .selectedtab {
       color: white; }
     .projects .tabs #tablabels li {
-      color: #EA3939;
+      color: #DA3C3C;
       text-decoration: none;
       font-style: italic;
       font-weight: 700;

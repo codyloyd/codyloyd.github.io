@@ -59,7 +59,7 @@ h1 {
 }
 
 a {
-  color: #EA3939;
+  color: #DA3C3C;
   text-decoration: none;
   font-style: italic;
   font-weight: 700;
@@ -77,11 +77,13 @@ a:hover{
 
 .projects {
   .projects-header{
+    margin-top: -20px;
     border-bottom: 3px solid #aaaaaa;
   }
   .tabs{
-    height: 340px;
+    height: 360px;
     position: relative;
+    margin-top: 60px;
     #tablabels{
       height: 250px;
       display: inline-block;
@@ -93,7 +95,7 @@ a:hover{
         color:white;
       }
       li {
-        color: #EA3939;
+        color: #DA3C3C;
         text-decoration: none;
         font-style: italic;
         font-weight: 700;
