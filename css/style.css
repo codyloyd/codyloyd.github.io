@@ -117,11 +117,13 @@ a:hover {
 
 @media (max-width: 750px) {
   .main-container {
-    margin: 0;
+    margin: -5px;
     padding: 5px; }
 
   header {
     margin: 0; }
+    header h1 {
+      font-size: 40px; }
     header h2 {
       display: none; }
     header ul li {

@@ -146,11 +146,14 @@ a:hover{
 //media queries....
 @media (max-width: 750px) {
   .main-container {
-    margin: 0;  
+    margin: -5px;  
     padding: 5px;  
   }
   header {
     margin:0;
+    h1{
+      font-size:40px;
+    }
     h2{
       display: none;
     }
