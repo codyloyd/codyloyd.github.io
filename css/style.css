@@ -40,6 +40,14 @@ header {
   -moz-box-shadow: 0px 0px 61px 0px rgba(0, 0, 0, 0.71);
   box-shadow: 0px 0px 61px 0px rgba(0, 0, 0, 0.71); }
 
+.latest-projects {
+  margin-top: 25px; }
+
+.home-photo {
+  margin-top: 25px; }
+  .home-photo img {
+    width: 250px; }
+
 h1, h2, h3, h4 {
   font-weight: 700;
   margin: 0; }
