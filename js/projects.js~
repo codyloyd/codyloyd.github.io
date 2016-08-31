@@ -1,9 +1,13 @@
 $(document).ready(function() {
   $('#tablabels > li').click(function(){
+    if((window).width()<400) {
       var target = $(this).attr("target")
       $("#tabcontents > li").addClass("hidden");
       $('#'+target).removeClass("hidden")
       $("#tablabels > li").removeClass("selectedtab")
       $(this).addClass('selectedtab')
+    } else {
+      
+    }
   })
 });

@@ -18,6 +18,7 @@ body {
     border-radius: 50%; }
 
 .center {
+  display: block;
   text-align: center;
   margin-bottom: 20px; }
 
@@ -118,7 +119,8 @@ a:hover {
 @media (max-width: 750px) {
   .main-container {
     margin: -5px;
-    padding: 5px; }
+    padding: 5px;
+    height: 100%; }
 
   header {
     margin: 0; }
@@ -127,6 +129,60 @@ a:hover {
     header h2 {
       display: none; }
     header ul li {
-      font-size: 18px; } }
+      font-size: 18px; }
+
+  .projects {
+    height: 100%;
+    display: block; }
+    .projects .checklink {
+      display: none; }
+    .projects .projects-header {
+      margin-top: -20px;
+      border-bottom: 3px solid #aaaaaa; }
+    .projects .tabs {
+      position: relative;
+      height: 100%;
+      margin-top: 60px; }
+      .projects .tabs .titlelink {
+        display: block; }
+      .projects .tabs #tablabels {
+        height: 250px;
+        display: none;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 20%; }
+        .projects .tabs #tablabels .selectedtab {
+          color: white; }
+        .projects .tabs #tablabels li {
+          color: #DA3C3C;
+          text-decoration: none;
+          font-style: italic;
+          font-weight: 700;
+          transition: color .5s;
+          margin-bottom: 28px;
+          line-height: 1; }
+          .projects .tabs #tablabels li:hover {
+            color: white; }
+      .projects .tabs #tabcontents {
+        position: relative;
+        display: inline-block;
+        top: 0;
+        list-style-type: none;
+        margin: 0;
+        padding: 2px;
+        width: 100%;
+        height: 100%;
+        text-align: center; }
+        .projects .tabs #tabcontents .text {
+          font-family: "Open Sans";
+          font-size: 18px; }
+          .projects .tabs #tabcontents .text a {
+            font-size: 18px;
+            font-weight: 400; }
+        .projects .tabs #tabcontents a {
+          font-size: 20px; }
+        .projects .tabs #tabcontents .hidden {
+          display: inline-block; } }
 
 /*# sourceMappingURL=style.css.map */
