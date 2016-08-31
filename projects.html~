@@ -69,8 +69,8 @@
               </div><br>
               <a href="https://cdn.rawgit.com/codyloyd/jsimageslider/master/index.html" class="checklink">Slide those images here!</a>
             </li>
-              <a href="https://rawgit.com/codyloyd/NYT_clone/master/article.html" class="titlelink">New York Times Clone</a>
             <li id="tab6" class="hidden">
+              <a href="https://rawgit.com/codyloyd/NYT_clone/master/article.html" class="titlelink">New York Times Clone</a>
               <div class="text">Created as a test of my HTML/CSS skills, this is a clone of an article on the New York Times website. You can see the original article <a href="http://www.nytimes.com/2014/03/18/science/space/detection-of-waves-in-space-buttresses-landmark-theory-of-big-bang.html?_r=4">here</a>.</div><br>
               <a href="https://rawgit.com/codyloyd/NYT_clone/master/article.html" class="checklink">Check it out here</a>
             </li>
