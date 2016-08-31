@@ -92,7 +92,7 @@ a:hover{
   }
   .tabs{
     .titlelink {
-      display: none;
+      //display: none;
     }
     height: 360px;
     position: relative;
@@ -174,15 +174,15 @@ a:hover{
     .checklink {
       display: none;
     }
-    .titlelink {
-      display: block;
-    }
+    
     .projects-header{
       margin-top: -20px;
       border-bottom: 3px solid #aaaaaa;
     }
     .tabs{
-      position: relative;
+     .titlelink {
+        display: block;
+      }   position: relative;
       height: 100%;
       margin-top: 60px;
       #tablabels{

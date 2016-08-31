@@ -95,7 +95,8 @@ a:hover {
       margin-bottom: 28px;
       line-height: 1; }
       .projects .tabs #tablabels li:hover {
-        color: white; }
+        color: white;
+        cursor: pointer; }
   .projects .tabs #tabcontents {
     position: absolute;
     display: inline-block;
