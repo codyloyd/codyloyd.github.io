@@ -42,7 +42,8 @@ table {
   border-spacing: 0; }
 
 body {
-  background: #FDFDFF; }
+  background: #FDFDFF;
+  font-family: Arial, Helvetica, sans-serif; }
 
 .header {
   position: relative;
@@ -60,14 +61,19 @@ body {
   background: #363232;
   height: 80px;
   display: flex;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  font-family: Oswald, Arial, Helvetica, sans-serif; }
   .nav a {
     color: #FDFDFF;
     flex: 1;
     text-decoration: none;
     font-size: 2em;
     text-align: center;
-    padding: .75em; }
+    padding: .75em;
+    transition: color .2s;
+    font-weight: bold; }
+    .nav a:hover {
+      color: #36a5ff; }
   .nav .nav-logo {
     max-width: 0;
     overflow: hidden;
@@ -87,7 +93,7 @@ body {
     flex: 1; }
 
 .container {
-  max-width: 600px;
+  max-width: 800px;
   font-size: 1.4em;
   line-height: 1.2em;
   margin: 0 auto; }
