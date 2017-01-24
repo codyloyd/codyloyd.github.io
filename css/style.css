@@ -45,6 +45,12 @@ body {
   background: #FDFDFF;
   font-family: Arial, Helvetica, sans-serif; }
 
+h1 {
+  font-size: 2em;
+  font-family: Oswald, Arial, Helvetica, sans-serif;
+  margin-top: 5px;
+  margin-bottom: 20px; }
+
 .header {
   position: relative;
   width: 100%;
@@ -96,6 +102,13 @@ body {
   max-width: 800px;
   font-size: 1.4em;
   line-height: 1.2em;
-  margin: 0 auto; }
+  margin: 0 auto;
+  margin-bottom: 50px; }
+
+.projects {
+  height: 500px; }
+
+.blue {
+  color: #36a5ff; }
 
 /*# sourceMappingURL=style.css.map */

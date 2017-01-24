@@ -50,11 +50,19 @@ $theme-blue: #36a5ff;
 $darker-blue: #0568B8;
 $lighter-blue: #75DFFF;
 $black: #363232;
-$white: #FDFDFF; 
+$white: #FDFDFF;
+$header-font:  Oswald, Arial, Helvetica, sans-serif;
 
 body {
   background: $white;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 2em;
+  font-family: $header-font;
+  margin-top: 5px;
+  margin-bottom: 20px;
 }
 
 .header {
@@ -76,7 +84,7 @@ body {
   height: 80px;
   display: flex;
   margin-bottom: 50px;
-  font-family: Oswald, Arial, Helvetica, sans-serif;
+  font-family: $header-font;
   a {
     color: $white;
     flex: 1;
@@ -119,4 +127,13 @@ body {
   font-size: 1.4em;
   line-height: 1.2em;
   margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+.projects {
+  height: 500px;
+}
+
+.blue {
+  color: $theme-blue;
 }
