@@ -63,6 +63,7 @@ h1 {
   font-family: $header-font;
   margin-top: 5px;
   margin-bottom: 20px;
+  color: $black;
 }
 
 .header {
@@ -85,6 +86,9 @@ h1 {
   display: flex;
   margin-bottom: 50px;
   font-family: $header-font;
+  -webkit-box-shadow: inset 0px 4px 20px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: inset 0px 4px 20px 0px rgba(0,0,0,0.5);
+  box-shadow: inset 0px 4px 20px 0px rgba(0,0,0,0.5);
   a {
     color: $white;
     flex: 1;
@@ -93,7 +97,6 @@ h1 {
     text-align: center;
     padding: .75em;
     transition: color .2s;
-    font-weight: bold;
     &:hover {
       color: $theme-blue;
     }
@@ -113,6 +116,9 @@ h1 {
 .fixed-nav {
   position: fixed;
   top: 0;
+  -webkit-box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.5);
   .nav-logo{
     max-width: 900px;
     flex:6;
@@ -131,9 +137,44 @@ h1 {
 }
 
 .projects {
-  height: 500px;
+  // height: 500px;
 }
 
 .blue {
   color: $theme-blue;
+}
+
+.project-flex-container{
+  display: flex;
+  height: 600px;
+}
+
+.project-list {
+  flex: 1;
+  // background: purple;
+  display: flex;
+  flex-direction: column;
+  a {
+    border: 1px solid black;
+    font-family: $header-font;
+    text-decoration: none;
+    color: $black;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.project-slider {
+  height: 80px;
+  width: 300px;
+  border: 1px solid black;
+  position: absolute;
+  transition: all .2s;
+}
+
+.project-description {
+  flex: 3;
+  background: #bada55;
 }

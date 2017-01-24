@@ -12,3 +12,22 @@ function fixNav(){
   }
 }
 window.addEventListener('scroll',fixNav)
+
+//projects thing
+
+const projects = document.querySelectorAll(".project-list > a")
+const slider = document.querySelector(".project-slider")
+function highlightProject(e) {
+  e.preventDefault();
+  const projectCoords = this.getBoundingClientRect();
+        const coords = {
+        width: projectCoords.width,
+        height: projectCoords.height,
+        top: projectCoords.top + window.scrollY,
+        left: projectCoords.left + window.scrollX,
+      }
+  slider.style.transform = `translate(${coords.left}px, ${coords.top - 110}px)`
+  console.log(coords)
+}
+
+projects.forEach(p => p.addEventListener('click', highlightProject))
