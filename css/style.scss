@@ -1,239 +1,85 @@
-@import 'https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700, 700i';
-@import 'https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i';
-
-* {
-  box-sizing: border-box;
+//css reset:
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
+//MY CSS:
+
+$theme-blue: #36a5ff;
+$darker-blue: #0568B8;
+$lighter-blue: #75DFFF;
+$black: #363232;
+$white: #FDFDFF; 
 
 body {
-  font-family: "Space Mono";
-  background-image: url(../images/congruent_outline.png);
-  background-attachment: fixed;
-  color: #efefef;
+  background: $white;
 }
 
-.photo {
+.header {
+  position: relative;
   width: 100%;
-  text-align: center;
-  img{
-    width: 150px;
-    margin: auto;
-    border-radius: 50%;
-  }
+  height: 250px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
-.center {
-  display: block;
-  text-align: center;
-  margin-bottom: 20px;
-}
-header {
-  text-align: center;
-  ul{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    li{
-      display: inline-block;
-      font-size: 24px;
-    }
-  }
+.logo {
+  width: 500px;
 }
 
-.main-container {
-  max-width: 800px;
-  padding: 50px;
-  background: rgba(1, 1, 1, .5);
-  margin: 40px auto;
-  -webkit-box-shadow: 0px 0px 61px 0px rgba(0,0,0,0.71);
-  -moz-box-shadow: 0px 0px 61px 0px rgba(0,0,0,0.71);
-  box-shadow: 0px 0px 61px 0px rgba(0,0,0,0.71);
-}
-
-.latest-projects {
-  margin-top: 25px;
-}
-.home-photo {
-  margin-top: 25px;
-  img {
-    width: 250px;
-  }
-}
-h1,h2,h3,h4 {
-  font-weight: 700;
-  margin: 0;
-}
-
-h1 {
-  font-size: 60px;
-}
-
-a {
-  color: #DA3C3C;
-  text-decoration: none;
-  font-style: italic;
-  font-weight: 700;
-  transition: color .5s;
-}
-
-a:hover{
-  color: white;
-}
-
-.bio {
-  font-family: "Open Sans";
-  line-height: 1.5;
-}
-
-.projects {
-  .projects-header{
-    margin-top: -20px;
-    border-bottom: 3px solid #aaaaaa;
-  }
-  .tabs{
-    .titlelink {
-      //display: none;
-    }
-    height: 360px;
-    position: relative;
-    margin-top: 60px;
-    #tablabels{
-      height: 250px;
-      display: inline-block;
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      width: 20%;
-      .selectedtab {
-        color:white;
-      }
-      li {
-        color: #DA3C3C;
-        text-decoration: none;
-        font-style: italic;
-        font-weight: 700;
-        transition: color .5s;
-        margin-bottom: 28px;
-        line-height: 1;
-        &:hover {
-          color:white;
-          cursor:pointer;
-        }
-      }
-    }
-    #tabcontents{
-      position: absolute;
-      display: inline-block;
-      top:0;
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      width: 80%;
-      text-align: center;
-      .text {
-        font-family: "Open Sans";
-        font-size: 18px;
-        a {
-          font-size: 18px;
-          font-weight: 400;
-        }
-      }
-      a{
-        font-size: 20px;
-      }
-      .hidden{
-        display: none;
-      }
-    }
-  }
-}
-
-//media queries....
-@media (max-width: 750px) {
-  .main-container {
-    margin: -5px;  
-    padding: 5px;  
-    height: 100%;
-  }
-  header {
-    margin:0;
-    h1{
-      font-size:40px;
-    }
-    h2{
-      display: none;
-    }
-    ul{
-      li{
-        font-size: 18px;
-      }
-    }
-  }
-  .projects {
-    height: 100%;
-    display: block;
-    .checklink {
-      display: none;
-    }
-    
-    .projects-header{
-      margin-top: -20px;
-      border-bottom: 3px solid #aaaaaa;
-    }
-    .tabs{
-     .titlelink {
-        display: block;
-      }   position: relative;
-      height: 100%;
-      margin-top: 60px;
-      #tablabels{
-        height: 250px;
-        display: none;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: 20%;
-        .selectedtab {
-          color:white;
-        }
-        li {
-          color: #DA3C3C;
-          text-decoration: none;
-          font-style: italic;
-          font-weight: 700;
-          transition: color .5s;
-          margin-bottom: 28px;
-          line-height: 1;
-          &:hover {
-            color:white;
-          }
-        }
-      }
-      #tabcontents{
-        position: relative;
-        display: inline-block;
-        top:0;
-        list-style-type: none;
-        margin: 0;
-        padding: 2px;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        .text {
-          font-family: "Open Sans";
-          font-size: 18px;
-          a {
-            font-size: 18px;
-            font-weight: 400;
-          }
-        }
-        a{
-          font-size: 20px;
-        }
-        .hidden{
-          display: inline-block;
-        }
-      }
-    }
+nav {
+  width: 100%;
+  background: $black;
+  height: 80px;
+  display: flex;
+  a {
+    color: $white;
+    flex: 1;
+    text-decoration: none;
+    font-size: 2em;
+    text-align: center;
+    padding: .75em;
   }
 }
