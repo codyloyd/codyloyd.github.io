@@ -52,6 +52,12 @@ h1 {
   margin-bottom: 20px;
   color: #363232; }
 
+h3 {
+  font-size: 1.3em;
+  font-family: Oswald, Arial, Helvetica, sans-serif;
+  margin-top: 15px;
+  margin-bottom: 5px; }
+
 .header {
   position: relative;
   width: 100%;
@@ -105,6 +111,13 @@ h1 {
   .fixed-nav a {
     flex: 1; }
 
+.divider {
+  text-align: center;
+  margin: 50px;
+  transition: all 2s; }
+  .divider img {
+    width: 80px; }
+
 .container {
   max-width: 800px;
   font-size: 1.4em;
@@ -113,7 +126,8 @@ h1 {
   margin-bottom: 50px; }
 
 .projects {
-  padding: 50px;
+  padding-top: 50px;
+  padding-bottom: 20px;
   max-width: 100%;
   background: #363232;
   -webkit-box-shadow: inset 0px 4px 20px 0px rgba(0, 0, 0, 0.5);
@@ -122,6 +136,10 @@ h1 {
   color: #FDFDFF; }
   .projects h1 {
     color: #FDFDFF; }
+
+.heading-container {
+  max-width: 800px;
+  margin: 0 auto; }
 
 .blue {
   color: #36a5ff; }

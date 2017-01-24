@@ -14,7 +14,7 @@ function fixNav(){
 window.addEventListener('scroll',fixNav)
 
 //link scrolling
-navLinks = document.querySelectorAll('.nav > a')
+const navLinks = document.querySelectorAll('.nav > a')
 navLinks.forEach(l => l.addEventListener('click', handleNavClick))
 function handleNavClick(e) {
   e.preventDefault();

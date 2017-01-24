@@ -65,6 +65,12 @@ h1 {
   margin-bottom: 20px;
   color: $black;
 }
+h3 {
+  font-size: 1.3em;
+  font-family: $header-font;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
 
 .header {
   position: relative;
@@ -129,6 +135,17 @@ h1 {
   }
 }
 
+.divider {
+  text-align: center;
+  margin: 50px;
+  transition: all 2s;
+  img {
+    width: 80px;
+  }
+}
+
+
+
 .container {
   max-width: 800px;
   font-size: 1.4em;
@@ -138,7 +155,8 @@ h1 {
 }
 
 .projects {
-  padding: 50px;
+  padding-top: 50px;
+  padding-bottom: 20px;
   max-width: 100%;
   background: $black;
   -webkit-box-shadow: inset 0px 4px 20px 0px rgba(0,0,0,0.5);
@@ -148,6 +166,10 @@ h1 {
   h1 {
     color: $white;
   }
+}
+.heading-container {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .blue {
