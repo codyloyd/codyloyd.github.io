@@ -18,7 +18,7 @@ window.addEventListener('scroll',fixNav)
 const projects = document.querySelectorAll(".project-list > a")
 const slider = document.querySelector(".project-slider")
 
-function highlightProject(project){
+function highlightProject(project,offset=0){
   const projectCoords = project.getBoundingClientRect();
         const coords = {
         width: projectCoords.width,
@@ -28,7 +28,7 @@ function highlightProject(project){
       }
   console.log(coords)
   slider.style.height = `${coords.height}px`
-  slider.style.transform = `translate(${coords.left}px, ${coords.top - 80 - 50}px)`
+  slider.style.transform = `translate(${coords.left}px, ${coords.top - 80 - 50 + offset}px)`
   slider.style.display = 'block'
 }
 
@@ -39,6 +39,5 @@ function handleProjectClick(e) {
 }
 
 projects.forEach(p => p.addEventListener('click', handleProjectClick))
-
 const firstProject = projects[0];
-highlightProject(firstProject)
+highlightProject(firstProject,5)
