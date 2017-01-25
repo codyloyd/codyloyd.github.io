@@ -45,6 +45,12 @@ body {
   background: #FDFDFF;
   font-family: Arial, Helvetica, sans-serif; }
 
+p {
+  margin-bottom: 8px; }
+
+strong {
+  font-family: Oswald, Arial, Helvetica, sans-serif; }
+
 h1 {
   font-size: 2em;
   font-family: Oswald, Arial, Helvetica, sans-serif;
@@ -55,8 +61,8 @@ h1 {
 h3 {
   font-size: 1.3em;
   font-family: Oswald, Arial, Helvetica, sans-serif;
-  margin-top: 15px;
-  margin-bottom: 5px; }
+  margin-top: 48px;
+  margin-bottom: 16px; }
 
 .header {
   position: relative;
@@ -181,5 +187,44 @@ h3 {
   padding: 20px; }
   .project-description h1 {
     color: #363232; }
+
+.contact a {
+  font-family: Oswald, Arial, Helvetica, sans-serif;
+  color: #36a5ff;
+  text-decoration: none; }
+.contact form {
+  margin: 0 auto;
+  text-align: center; }
+.contact input {
+  padding: 8px;
+  font-size: .8em;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 235px; }
+.contact textarea {
+  padding: 8px;
+  font-size: .8em;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 500px; }
+.contact input[type="submit"] {
+  padding: 10px 20px 10px 20px;
+  font-size: 1em;
+  font-family: Oswald, Arial, Helvetica, sans-serif;
+  border: none;
+  border-radius: 4px;
+  background: #36a5ff;
+  transition: all .2s;
+  -webkit-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.33);
+  -moz-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.33);
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.33); }
+  .contact input[type="submit"]:hover {
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.33);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.33);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.33);
+    transform: translate(-2px, -5px); }
+
+footer {
+  padding-top: 16px;
+  background: #363232;
+  height: 240px; }
 
 /*# sourceMappingURL=style.css.map */

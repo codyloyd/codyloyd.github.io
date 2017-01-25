@@ -58,6 +58,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+p {
+  margin-bottom: 8px;
+}
+
+strong {
+  font-family: $header-font;
+}
+
 h1 {
   font-size: 2em;
   font-family: $header-font;
@@ -68,8 +76,8 @@ h1 {
 h3 {
   font-size: 1.3em;
   font-family: $header-font;
-  margin-top: 15px;
-  margin-bottom: 5px;
+  margin-top: 48px;
+  margin-bottom: 16px;
 }
 
 .header {
@@ -222,4 +230,52 @@ h3 {
   h1{
     color: $black;
   }
+}
+
+.contact {
+  a{
+    font-family: $header-font;
+    color: $theme-blue;
+    text-decoration: none;
+  }
+  form {
+    margin: 0 auto;
+    text-align: center;
+  }
+  input {
+    padding: 8px;
+    font-size: .8em;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 235px;
+  }
+  textarea {
+    padding: 8px;
+    font-size: .8em;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 500px;
+  }
+  input[type="submit"] {
+    padding: 10px 20px 10px 20px;
+    font-size: 1em;
+    font-family: $header-font;
+    border: none;
+    border-radius: 4px;
+    background: $theme-blue;
+    transition: all .2s;
+    -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.33);
+    -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.33);
+    box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.33);
+    &:hover {
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.33);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.33);
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.33);
+    transform: translate(-2px,-5px)  
+    }
+  }
+}
+
+footer {
+  padding-top: 16px;
+  background: $black;
+  height: 240px;
 }
