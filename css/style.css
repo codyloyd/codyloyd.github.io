@@ -124,6 +124,11 @@ h3 {
   .divider img {
     width: 80px; }
 
+.about a {
+  font-family: Oswald, Arial, Helvetica, sans-serif;
+  color: #36a5ff;
+  text-decoration: none; }
+
 .container {
   max-width: 800px;
   font-size: 1.4em;
