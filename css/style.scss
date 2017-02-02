@@ -257,6 +257,10 @@ h3 {
   }
 }
 
+.mobile-projects {
+    display: none;
+  }
+
 .contact {
   a{
     font-family: $header-font;
@@ -277,7 +281,7 @@ h3 {
     padding: 8px;
     font-size: .8em;
     font-family: Arial, Helvetica, sans-serif;
-    width: 500px;
+    max-width: 500px;
   }
   input[type="submit"] {
     padding: 10px 20px 10px 20px;
@@ -314,13 +318,24 @@ footer {
   // logo always sticky at top of screen, so no JS scroll magic
   // nav drops down on arrow click so that the links show above the
 
-
+  h1 {
+    text-align: center;
+  }
   body {
    // margin-top: 90px;
+   padding: 0 8px 0 8px;
+   font-size: .8em;
+  }
+
+  .contact {
+    textarea {
+      width: 95%;
+    }
   }
   
   .header {
     // display: none;
+    height: 160px;
     .logo {
       width: 95%;
     }
@@ -328,6 +343,25 @@ footer {
 
   .nav {
     display: none;
+  }
+
+  .projects {
+    display: none;
+  }
+  .mobile-projects {
+    text-align: center;
+    display: block;
+    a{
+      font-family: $header-font;
+      color: $theme-blue;
+      text-decoration: none;
+    }
+  }
+
+  .about {
+    h1 {
+      display: none;
+    }
   }
   //add a bit of margin around the text.
 
