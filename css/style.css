@@ -195,6 +195,18 @@ h3 {
   padding: 20px; }
   .project-description h1 {
     color: #363232; }
+  .project-description a {
+    font-family: Oswald, Arial, Helvetica, sans-serif;
+    color: #36a5ff;
+    text-decoration: none; }
+
+.ghblurb {
+  text-align: center;
+  margin-top: 24px; }
+  .ghblurb a {
+    font-family: Oswald, Arial, Helvetica, sans-serif;
+    color: #36a5ff;
+    text-decoration: none; }
 
 .contact a {
   font-family: Oswald, Arial, Helvetica, sans-serif;

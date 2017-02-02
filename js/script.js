@@ -24,9 +24,6 @@ function handleNavClick(e) {
   const top = section.getBoundingClientRect().top + window.scrollY;
   console.log(top)
   window.scrollTo(0,top-90);
-  // document.querySelector(`.${this.dataset.link}`).scrollIntoView({ 
-  //   behavior: 'smooth' 
-  // });
 }
 
 //projects thing

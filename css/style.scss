@@ -240,6 +240,21 @@ h3 {
   h1{
     color: $black;
   }
+  a {
+    font-family: $header-font;
+    color: $theme-blue;
+    text-decoration: none;
+  }
+}
+
+.ghblurb {
+  text-align: center;
+  margin-top: 24px;
+  a {
+    font-family: $header-font;
+    color: $theme-blue;
+    text-decoration: none;
+  }
 }
 
 .contact {
