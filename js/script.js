@@ -61,6 +61,7 @@ function handleProjectClick(e) {
 projects.forEach(p => p.addEventListener('click', handleProjectClick))
 const firstProject = projects[0];
 const firstDescription = document.querySelectorAll(".description-text")[0]
-console.log(firstDescription)
-highlightProject(firstProject,5)
-loadProject(firstDescription.id)
+document.addEventListener("DOMContentLoaded", function() {
+  highlightProject(firstProject,5)
+  loadProject(firstDescription.id)
+});
