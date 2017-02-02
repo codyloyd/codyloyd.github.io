@@ -48,6 +48,9 @@ body {
 p {
   margin-bottom: 8px; }
 
+em {
+  font-style: italic; }
+
 strong {
   font-family: Oswald, Arial, Helvetica, sans-serif; }
 
@@ -73,7 +76,7 @@ h3 {
   justify-content: center; }
 
 .logo {
-  width: 500px; }
+  max-width: 500px; }
 
 .nav {
   z-index: 3;
@@ -231,5 +234,12 @@ footer {
   padding-top: 16px;
   background: #363232;
   height: 240px; }
+
+@media (max-width: 800px) {
+  .header .logo {
+    width: 95%; }
+
+  .nav {
+    display: none; } }
 
 /*# sourceMappingURL=style.css.map */
