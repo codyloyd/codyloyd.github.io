@@ -47,6 +47,7 @@ function highlightProject(project,offset=0){
 function loadProject(target){
   const project = document.querySelector(`#${target}`)
   const descriptions = document.querySelectorAll(".description-text")
+  document.querySelector('.select-a-project').style.display = "none"
   descriptions.forEach(d => d.style.display = "none")
   project.style.display = "block"
 }
@@ -61,7 +62,7 @@ function handleProjectClick(e) {
 projects.forEach(p => p.addEventListener('click', handleProjectClick))
 const firstProject = projects[0];
 const firstDescription = document.querySelectorAll(".description-text")[0]
-document.addEventListener("DOMContentLoaded", function() {
-  highlightProject(firstProject,5)
-  loadProject(firstDescription.id)
-});
+// document.addEventListener("DOMContentLoaded", function() {
+//     highlightProject(firstProject,5)
+//     loadProject(firstDescription.id)
+// });

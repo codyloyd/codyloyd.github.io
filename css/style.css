@@ -201,6 +201,9 @@ h3 {
     color: #36a5ff;
     text-decoration: none; }
 
+.description-text {
+  display: none; }
+
 .ghblurb {
   text-align: center;
   margin-top: 24px; }
