@@ -46,8 +46,8 @@ body {
   font-family: Arial, Helvetica, sans-serif; }
 
 p {
-  margin-bottom: 8px;
-  line-height: 1.3em; }
+  margin-bottom: .5em;
+  line-height: 1.5em; }
 
 em {
   font-style: italic; }
