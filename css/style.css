@@ -549,6 +549,16 @@ nav a[aria-current="page"] {
   line-height: 1.6;
 }
 
+.home-footer-img {
+  margin-top: var(--space-3xl);
+  text-align: center;
+}
+
+.home-footer-img img {
+  max-width: 250px;
+  display: inline-block;
+}
+
 /* =========================================================
    RESPONSIVE
    ========================================================= */
