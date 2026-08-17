@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Header D — Double Rule + Highlight</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #fff; --fg: #111; --accent: #0057ff; --highlight: #ccff00;
+    --highlight-fg: #111; --muted: #595959; --rule: #eee;
+  }
+  [data-theme="dark"] {
+    --bg: #141418; --fg: #e4e4e7; --accent: #3b82f6; --highlight: #ccff00;
+    --highlight-fg: #141418; --muted: #8b8b96; --rule: #2a2a2e;
+  }
+  body { font-family: 'IBM Plex Mono', monospace; background: var(--bg); color: var(--fg); font-size: 16px; line-height: 1.6; }
+  .site { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .label { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 1.5rem; }
+
+  /* === HEADER D: Double rule, highlight on first letter, nav inline === */
+  .site-header {
+    margin-bottom: 3rem;
+    border-top: 2px solid var(--fg);
+    border-bottom: 2px solid var(--fg);
+    padding: 1rem 0;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .site-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    color: var(--fg);
+  }
+
+  .site-name .initial {
+    background: var(--highlight);
+    color: var(--highlight-fg);
+    padding: 0 0.15em;
+  }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--fg);
+    width: 1.75rem;
+    height: 1.75rem;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .theme-toggle::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--fg);
+  }
+  [data-theme="dark"] .theme-toggle::before {
+    background: none;
+    border: 2px solid var(--fg);
+    inset: 3px;
+  }
+
+  .header-divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin-bottom: 0.75rem;
+  }
+
+  .header-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  nav {
+    display: flex;
+    gap: 0.25rem;
+  }
+  nav a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.75rem;
+    border: 1.5px solid transparent;
+    transition: all 0.1s;
+  }
+  nav a:hover { border-color: var(--fg); }
+  nav a.active { background: var(--fg); color: var(--bg); }
+
+  .header-meta {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  /* demo content */
+  .demo-content { padding-left: 1.5rem; border-left: 2px solid var(--rule); color: var(--muted); max-width: 55ch; }
+  .section-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; margin-top: 2rem; }
+  .marker { width: 12px; height: 12px; background: var(--accent); flex-shrink: 0; }
+  .section-header h2 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; }
+  .switcher { position: fixed; top: 1rem; right: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; padding: 0.4rem 0.8rem; background: var(--fg); color: var(--bg); border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<button class="switcher" onclick="toggle()">Toggle dark</button>
+<div class="site">
+  <div class="label">Option D — Double Rule + Highlight</div>
+
+  <header class="site-header">
+    <div class="header-top">
+      <a href="#" class="site-name"><span class="initial">C</span>ody <span class="initial">L</span>oyd</a>
+      <button class="theme-toggle" aria-label="Toggle dark mode" onclick="toggle()"></button>
+    </div>
+    <hr class="header-divider">
+    <div class="header-bottom">
+      <nav>
+        <a href="#" class="active">About</a>
+        <a href="#">Fiction</a>
+        <a href="#">Games</a>
+        <a href="#">Music</a>
+      </nav>
+      <span class="header-meta">Est. 2017</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-header"><div class="marker"></div><h2>Writing</h2></div>
+    <div class="demo-content">
+      <p>A double-rule frame (heavy top and bottom borders) boxes the header into a distinct banner zone. The initials get the neon-yellow highlight treatment — the same highlight used for inline links — giving the name a subtle branded touch. A light inner rule separates the name from the nav row. "Est. 2017" sits right-aligned as quiet metadata.</p>
+    </div>
+  </main>
+</div>
+<script>
+  function toggle() {
+    const h = document.documentElement;
+    h.getAttribute('data-theme') === 'dark' ? h.removeAttribute('data-theme') : h.setAttribute('data-theme', 'dark');
+  }
+</script>
+</body>
+</html>

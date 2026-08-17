@@ -1,0 +1,22 @@
+---
+layout: base.njk
+---
+<article>
+  <div class="section-header">
+    <div class="marker"></div>
+    <h1>{{ title }}</h1>
+  </div>
+  <div class="post-header content-rail">
+    <div class="post-meta">
+      <time datetime="{{ date | dateFormat }}">{{ date | dateFormat }}</time>
+      {% if tags %}
+        {% for tag in tags %}{% if tag != "post" and tag != "fiction" %}
+          <span class="tag">{{ tag }}</span>
+        {% endif %}{% endfor %}
+      {% endif %}
+    </div>
+  </div>
+  <div class="post-content">
+    {{ content | safe }}
+  </div>
+</article>

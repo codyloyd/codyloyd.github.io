@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option C — Stacked Brutalist</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #fff;
+    --fg: #111;
+    --accent: #0057ff;
+    --highlight: #ccff00;
+    --muted: #999;
+    --rule: #ddd;
+  }
+
+  body {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  .site {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  /* header */
+  header {
+    margin-bottom: 3rem;
+  }
+
+  .name-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--fg);
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .location {
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  nav {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.75rem;
+  }
+
+  nav a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 0.8rem;
+    border: 1.5px solid transparent;
+    transition: all 0.1s;
+  }
+
+  nav a:hover {
+    border-color: var(--fg);
+  }
+
+  nav a.active {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  /* page */
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-header h1 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  .page-header .marker {
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .content {
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--rule);
+  }
+
+  .content p {
+    margin-bottom: 1.4rem;
+    max-width: 55ch;
+  }
+
+  .content a {
+    color: var(--fg);
+    text-decoration: none;
+    background: var(--highlight);
+    padding: 0 0.2em;
+    font-weight: 600;
+  }
+
+  .content a:hover {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* post list */
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 4rem 0 1.5rem;
+  }
+
+  .section-break .marker {
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .section-break span {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  .post-list {
+    list-style: none;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--rule);
+  }
+
+  .post-list li {
+    padding: 0.75rem 0;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .post-list li + li {
+    border-top: 1px solid var(--rule);
+  }
+
+  .post-list .num {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-weight: 600;
+    min-width: 2ch;
+  }
+
+  .post-list a {
+    color: var(--fg);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .post-list a:hover {
+    background: var(--highlight);
+  }
+
+  .post-list .date {
+    margin-left: auto;
+    font-size: 0.65rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  footer {
+    margin-top: 5rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--fg);
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  footer a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: var(--fg);
+  }
+</style>
+</head>
+<body>
+<div class="site">
+  <header>
+    <div class="name-row">
+      <div class="name">Cody Loyd</div>
+      <div class="location">Rural Missouri</div>
+    </div>
+    <nav>
+      <a href="#" class="active">About</a>
+      <a href="#">Fiction</a>
+      <a href="#">Games</a>
+      <a href="#">Music</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <div class="marker"></div>
+      <h1>About</h1>
+    </div>
+    <div class="content">
+      <p>For better or worse, I am a completely self-taught programmer. For years I worked as a high school band teacher in a small school district in Missouri, but in April of 2016 I decided to learn to code. I've written about that journey a bit <a href="#">here</a>. (I really should move that article to my own blog shouldn't I)</p>
+      <p>I live in rural Missouri with my wife, four children and a dog.</p>
+    </div>
+
+    <div class="section-break">
+      <div class="marker"></div>
+      <span>Writing</span>
+    </div>
+    <ul class="post-list">
+      <li><span class="num">01</span> <a href="#">On learning things the hard way</a> <span class="date">Jul 2026</span></li>
+      <li><span class="num">02</span> <a href="#">Why I still use vanilla CSS</a> <span class="date">Jun 2026</span></li>
+      <li><span class="num">03</span> <a href="#">Building a game in 48 hours</a> <span class="date">May 2026</span></li>
+    </ul>
+  </main>
+
+  <footer>
+    <span>&copy; 2026</span>
+    <a href="#">Github</a>
+  </footer>
+</div>
+</body>
+</html>

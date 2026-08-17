@@ -1,0 +1,17 @@
+---
+layout: base.njk
+title: Writing
+permalink: /writing/
+---
+<div class="section-header">
+  <div class="marker"></div>
+  <h1>Writing</h1>
+</div>
+<ul class="post-list">
+  {% for post in collections.posts %}
+  <li>
+    <a href="{{ post.url }}">{{ post.data.title }}</a>
+    <span class="date">{{ post.date | dateFormat }}</span>
+  </li>
+  {% endfor %}
+</ul>

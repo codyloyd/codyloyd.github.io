@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option B — Swiss Brutalist</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f5f5f0;
+    --fg: #111;
+    --accent: #d00;
+    --muted: #777;
+    --rule: #111;
+  }
+
+  body {
+    font-family: 'Space Mono', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.65;
+    font-size: 15px;
+  }
+
+  .site {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* giant header block */
+  header {
+    border: 3px solid var(--fg);
+    padding: 2.5rem 2rem;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .name {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+
+  /* red block number */
+  .block-num {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    background: var(--accent);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.4rem 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* nav as a grid row */
+  nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 3px solid var(--fg);
+    border-top: none;
+    margin-bottom: 3rem;
+  }
+
+  nav a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.9rem 1rem;
+    text-align: center;
+    border-right: 1px solid var(--fg);
+    transition: background 0.1s, color 0.1s;
+  }
+
+  nav a:last-child {
+    border-right: none;
+  }
+
+  nav a:hover,
+  nav a.active {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  /* page label */
+  .page-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    border-bottom: 3px solid var(--fg);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .content {
+    max-width: 600px;
+  }
+
+  .content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .content a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .content a:hover {
+    text-decoration: line-through;
+  }
+
+  /* post list */
+  .post-list {
+    list-style: none;
+    margin-top: 3rem;
+    border-top: 3px solid var(--fg);
+  }
+
+  .post-list li {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .post-list .date {
+    font-size: 0.7rem;
+    color: var(--muted);
+    padding: 1rem 0;
+    border-right: 1px solid #ccc;
+  }
+
+  .post-list a {
+    color: var(--fg);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 1rem;
+    display: block;
+  }
+
+  .post-list a:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  footer {
+    margin-top: 5rem;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    border-top: 3px solid var(--fg);
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+<div class="site">
+  <header>
+    <span class="block-num">EST. 2016</span>
+    <div class="name">Cody<br>Loyd</div>
+    <div class="subtitle">Programmer / Writer / Musician</div>
+  </header>
+
+  <nav>
+    <a href="#" class="active">About</a>
+    <a href="#">Fiction</a>
+    <a href="#">Games</a>
+    <a href="#">Music</a>
+  </nav>
+
+  <main>
+    <div class="page-label">Section 01</div>
+    <div class="page-title">About</div>
+    <div class="content">
+      <p>For better or worse, I am a completely self-taught programmer. For years I worked as a high school band teacher in a small school district in Missouri, but in April of 2016 I decided to learn to code. I've written about that journey a bit <a href="#">here</a>. (I really should move that article to my own blog shouldn't I)</p>
+      <p>I live in rural Missouri with my wife, four children and a dog.</p>
+    </div>
+
+    <ul class="post-list">
+      <li><span class="date">2026.07.14</span> <a href="#">On learning things the hard way</a></li>
+      <li><span class="date">2026.06.02</span> <a href="#">Why I still use vanilla CSS</a></li>
+      <li><span class="date">2026.05.19</span> <a href="#">Building a game in 48 hours</a></li>
+    </ul>
+  </main>
+
+  <footer>
+    <span>&copy; 2026 Cody Loyd</span>
+    <span>Built by hand</span>
+  </footer>
+</div>
+</body>
+</html>

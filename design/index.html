@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Header Options</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Mono', monospace;
+    background: #111;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 3rem 2rem;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+
+  .sub {
+    color: #666;
+    font-size: 0.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: #333;
+    border: 1px solid #333;
+  }
+
+  .option {
+    background: #1a1a1a;
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.1s;
+  }
+
+  .option:hover {
+    background: #222;
+  }
+
+  .letter {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    min-width: 2ch;
+    color: #3b82f6;
+  }
+
+  .info h2 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .info p {
+    font-size: 0.75rem;
+    color: #888;
+    line-height: 1.6;
+  }
+
+  .arrow {
+    font-size: 1.2rem;
+    color: #444;
+    align-self: center;
+    transition: color 0.1s, transform 0.1s;
+  }
+
+  .option:hover .arrow {
+    color: #e0e0e0;
+    transform: translateX(4px);
+  }
+
+  footer {
+    margin-top: 3rem;
+    font-size: 0.7rem;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Header — Inverted Bar Iterations</h1>
+  <p class="sub">Riffs on the Option C concept — click to preview, each has a dark mode toggle</p>
+
+  <div class="options">
+    <a href="header-c.html" class="option">
+      <div class="letter">C</div>
+      <div class="info">
+        <h2>Original</h2>
+        <p>Inverted name bar with blue left notch. Nav in equal-width cells below with cell dividers, heavy bottom border. Active nav inverts.</p>
+      </div>
+      <div class="arrow">&rarr;</div>
+    </a>
+
+    <a href="header-c1.html" class="option">
+      <div class="letter">C1</div>
+      <div class="info">
+        <h2>Softer Bar, Free Nav</h2>
+        <p>Same inverted bar, but accent moves to bottom border. Nav reverts to free-floating pills — less rigid, more breathing room.</p>
+      </div>
+      <div class="arrow">&rarr;</div>
+    </a>
+
+    <a href="header-c2.html" class="option">
+      <div class="letter">C2</div>
+      <div class="info">
+        <h2>Split Bar</h2>
+        <p>Everything in one inverted row — name left, nav right. Nav links are dimmed, brighten on hover. Active page gets accent-blue fill. Most compact.</p>
+      </div>
+      <div class="arrow">&rarr;</div>
+    </a>
+
+    <a href="header-c3.html" class="option">
+      <div class="letter">C3</div>
+      <div class="info">
+        <h2>Highlight Notch</h2>
+        <p>Left notch uses the neon-yellow highlight instead of blue. Active nav gets highlight fill. Nav cells use bottom-border indicators instead of dividers.</p>
+      </div>
+      <div class="arrow">&rarr;</div>
+    </a>
+
+    <a href="header-c4.html" class="option">
+      <div class="letter">C4</div>
+      <div class="info">
+        <h2>Stacked Inverted</h2>
+        <p>Both rows inverted — the whole header is a dark block. A thin accent-blue seam separates name from nav. Active page pops with blue fill. Most monolithic.</p>
+      </div>
+      <div class="arrow">&rarr;</div>
+    </a>
+  </div>
+
+  <footer>Each file is self-contained &middot; design-system.html is the source of truth</footer>
+</div>
+</body>
+</html>

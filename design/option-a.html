@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option A — Terminal Brutalist</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --fg: #e0e0e0;
+    --accent: #ff5722;
+    --muted: #555;
+    --border: #333;
+  }
+
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  .site {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  header {
+    margin-bottom: 4rem;
+  }
+
+  .name {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .name span {
+    color: var(--accent);
+  }
+
+  .tagline {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  nav {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.75rem 1.25rem;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  nav a:first-child {
+    padding-left: 0;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+  }
+
+  nav a.active {
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+  }
+
+  main {
+    margin-top: 3rem;
+  }
+
+  .page-title {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .page-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .content p {
+    margin-bottom: 1.5rem;
+    color: var(--fg);
+  }
+
+  .content a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+  }
+
+  .content a:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.1em;
+    background: var(--accent);
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  footer {
+    margin-top: 6rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  /* post list demo */
+  .post-list {
+    list-style: none;
+  }
+
+  .post-list li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2rem;
+  }
+
+  .post-list li:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  .post-list a {
+    color: var(--fg);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .post-list a:hover {
+    color: var(--accent);
+  }
+
+  .post-list .date {
+    color: var(--muted);
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<div class="site">
+  <header>
+    <div class="name">CODY<span>_</span>LOYD</div>
+    <div class="tagline">// programmer, writer, musician</div>
+    <nav>
+      <a href="#" class="active">ABOUT</a>
+      <a href="#">FICTION</a>
+      <a href="#">GAMES</a>
+      <a href="#">MUSIC</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-title">about</div>
+    <div class="content">
+      <p>For better or worse, I am a completely self-taught programmer. For years I worked as a high school band teacher in a small school district in Missouri, but in April of 2016 I decided to learn to code. I've written about that journey a bit <a href="#">here</a>. (I really should move that article to my own blog shouldn't I)</p>
+      <p>I live in rural Missouri with my wife, four children and a dog.<span class="cursor"></span></p>
+    </div>
+
+    <div class="page-title" style="margin-top:4rem;">recent posts</div>
+    <ul class="post-list">
+      <li><a href="#">On learning things the hard way</a> <span class="date">2026-07-14</span></li>
+      <li><a href="#">Why I still use vanilla CSS</a> <span class="date">2026-06-02</span></li>
+      <li><a href="#">Building a game in 48 hours</a> <span class="date">2026-05-19</span></li>
+    </ul>
+  </main>
+
+  <footer>
+    &copy; 2026 cody loyd — built by hand
+  </footer>
+</div>
+</body>
+</html>

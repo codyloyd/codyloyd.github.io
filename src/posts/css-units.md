@@ -1,0 +1,50 @@
+---
+layout: post.njk
+title: "CSS units: em, rem, and px"
+date: 2021-02-26
+tags: ["post", "CSS"]
+permalink: /2021/css-units/
+---
+
+You have a lot of options when it comes to units inside CSS. It can be confusing to know which units to use, and the web is full of somewhat contradictory advice on the topic. Here I'll present my thoughts on the matter.
+
+I'll start with the conclusion: for the most part, it doesn't matter what you use, but I personally prefer using rem for font-sizes and px for pretty much everything else.  In this article, I'll explain why.
+
+## definitions
+
+Of the three units we're covering, px is the most common.
+
+> The **CSS pixel**—denoted in CSS with the suffix `px`—is a unit of length which roughly corresponds to the width or height of a single dot that can be comfortably seen by the human eye without strain, but is otherwise as small as possible. By definition, this is the physical size of a single pixel at a pixel density of 96 DPI, located an arm's length away from the viewer's eyes. — MDN
+
+For what it's worth, 1px does not necessarily equal exactly one physical pixel on the display.  Especially today, when monitor technology is continuously improving, software settings can drastically change the size of a single 'pixel.'  Despite this, if you're writing CSS, you almost certainly have an almost intuitive sense of what a pixel stands for and have used them plenty.
+
+The `em` is a relative unit that refers to the font-size of the parent's element.  So, if a parent's font-size is 16px, then `1em` would be `16px` and `2em` would be `32px`.  An important thing to realize with `em` is that if the font-size of an element changes, so does the value of `em`.  So, if you set some element's font size to `2em`, and one of its children is also `2em`, the calculated value of those 2 font-sizes will not be the same.  The child will be double the size of the parent.
+
+A `rem` is very similar to an `em` except that instead of always referring to an element's parent, it always refers to the font size of the root HTML element.  So, in the previous example, if a parent and child both get `2rem`, the calculated value *will* be the same.
+
+Obviously, there are more options out there than just em, rem and px, and there are good reasons why you might want to consider using other units in certain situations.  This article is specifically about the three in the title.  ([this mdn article](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units#lengths) is a good quick overview of all the options) Second, I'm *mostly* talking here about the most common usages for these units in a typical UI: defining font-sizes, margins, paddings, height and width.  My thoughts and advice may apply elsewhere, but I'm not trying to specify a concrete rule to be followed in every situation.
+
+## implications
+
+One of the main reasons anyone would want to use a relative unit instead of the more absolute `px` is accessibility.  Many users, for various reasons, change the default font-size of their browser to improve readablility.  Lengths that are defined in either `em` or `rem` will change, while `px` values will remain static.
+
+So, if you want your users to be able to boost the font-size of their browser, and have that affect your website you should use either `em` or `rem`.  This does not mean, however, that it would be advisable to encode *every* length as a relative unit.
+
+Also, these days it's much easier to zoom in on a website in most modern browsers.  With zooming, even absolute px values will scale.  For this reason, one convincing (though slightly dated) [stack-overflow answer](https://stackoverflow.com/a/11803273) suggests that using relative units is not worth the effort.  Of course, it is followed up by a newer and [even more detailed response](https://stackoverflow.com/a/43131958) that suggests the opposite.  Zooming works very nicely in modern browsers.  Typically zooming in will emulate using a smaller screen, so if you zoom in enough, the browser will trigger your media-queries and display the mobile version of the site.
+
+![Webpack site bundling images](/images/webpacksite.gif)
+
+
+## suggestions
+
+My personal opinion is as I stated above: use `rem` for font-size and `px` for everything else.  In my mind `em` is more confusing than it's really worth and can lead to confusing size-related bugs. Whether or not someone on Stack Overflow thinks people are likely to change their browser's font-size is also largely irrelevant. If the option is there, we should code in such a way that respects the user's wishes, so at least for font-size I recommend using `rem`. However, the decision to use `rem` or `px` for things like margin and padding comes down to design preference. Consider the following:
+
+![Relative vs pixel units comparison](/images/rem-or-px.gif)
+
+In the above clip, both cards use `rem` to define font-size. The left-card uses `rem` to define paddings/margins, and the right card uses px.  The obvious difference is that all padding and margin scale inside the relative card along with the font.  Personally, I prefer the effect of the pixels card on the right. The relative card more accurately simulates a zoomed view, but I prefer how the pixel card preserves space by not inflating whitespace around the text.  You can play with this example [here](https://codepen.io/codyloyd/pen/mdOXeMX).
+
+One possible issue with using `px` and `rem` together is that the scaling could break some layouts.  This depends on how you set things up, but if (for example) your header layout will break if the text within it overflows or wraps to a second line, you might not want to use this option.  In this situation, my first recommendation is to do your best to make your layouts flexible enough to accommodate things like text wrapping and overflows.  If this isn't possible, then it might be better to simply use `px` for everything.  Your font sizes will not change with respect to the user's settings, but they will still be able to use their browser's zoom feature, which will only break layouts if you have not done any responsive styling.
+
+So to reiterate my conclusion: I definitely prefer using relative units to define font-size so that you can respect the user's settings, but I don't personally think it's a big deal if your layout is complex enough that you cannot support it. If you're using `rem` for fonts, then I slightly prefer using pixels for elements such as margin and padding, but there is nothing wrong with using `rem` for that, if you prefer that scaling effect.
+
+In either case, it *is* important to consider these details and make a conscious decision either way.  Applying these concepts in a haphazard fashion is likely to make your site unresponsive and difficult for users that rely on assistive technology.

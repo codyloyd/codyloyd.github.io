@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System — codyloyd.com</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+  /* =========================================================
+     DESIGN TOKENS
+     ========================================================= */
+  :root {
+    --bg:        #fff;
+    --fg:        #111;
+    --accent:    #0057ff;
+    --highlight: #ccff00;
+    --highlight-fg: #111;
+    --muted:     #595959;
+    --rule:      #eee;
+    --danger:    #d00;
+
+    --font:       'IBM Plex Mono', monospace;
+    --base-size:  16px;
+    --line-height: 1.6;
+    --measure:    55ch;
+    --max-width:  680px;
+
+    --space-xs:  0.25rem;
+    --space-sm:  0.5rem;
+    --space-md:  1rem;
+    --space-lg:  1.5rem;
+    --space-xl:  2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+    --space-4xl: 6rem;
+  }
+
+  /* =========================================================
+     RESET
+     ========================================================= */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: var(--line-height);
+    font-size: var(--base-size);
+  }
+
+  /* =========================================================
+     LAYOUT
+     ========================================================= */
+  .ds {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: var(--space-xl);
+  }
+
+  .ds-header {
+    border-bottom: 2px solid var(--fg);
+    padding-bottom: var(--space-lg);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .ds-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .ds-header p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: var(--space-xs);
+  }
+
+  /* section container */
+  .ds-section {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .ds-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: var(--space-xl);
+  }
+
+  .ds-section-header .marker {
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .ds-section-header h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .ds-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: var(--space-sm);
+  }
+
+  .ds-note {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: var(--space-sm);
+    max-width: var(--measure);
+  }
+
+  .ds-note code {
+    background: var(--rule);
+    color: var(--fg);
+    padding: 0.1em 0.35em;
+    font-size: 0.9em;
+  }
+
+  .ds-specimen {
+    padding: var(--space-lg);
+    border: 1px solid var(--rule);
+    margin-bottom: var(--space-md);
+  }
+
+  .ds-specimen + .ds-note {
+    margin-top: calc(-0.5 * var(--space-md));
+    margin-bottom: var(--space-xl);
+  }
+
+  .ds-rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: var(--space-xl) 0;
+  }
+
+  /* =========================================================
+     01. COLORS
+     ========================================================= */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: var(--space-md);
+  }
+
+  .color-card {
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .color-swatch {
+    height: 80px;
+  }
+
+  .color-info {
+    padding: 0.75rem;
+  }
+
+  .color-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.2rem;
+  }
+
+  .color-var {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .color-hex {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .color-usage {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    line-height: 1.5;
+  }
+
+  /* pairing demos */
+  .color-pairing {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .color-pairing-demo {
+    padding: 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  /* =========================================================
+     02. TYPOGRAPHY
+     ========================================================= */
+  .type-scale {
+    border-left: 2px solid var(--rule);
+    padding-left: var(--space-lg);
+  }
+
+  .type-row {
+    padding: var(--space-md) 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: var(--space-xl);
+  }
+
+  .type-row + .type-row {
+    border-top: 1px solid var(--rule);
+  }
+
+  .type-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* =========================================================
+     03. COMPONENTS
+     ========================================================= */
+
+  /* --- Buttons --- */
+  .btn {
+    font-family: var(--font);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.55rem 1.4rem;
+    border: 1.5px solid var(--fg);
+    background: transparent;
+    color: var(--fg);
+    cursor: pointer;
+    transition: all 0.1s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .btn-primary {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .btn-accent {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-accent:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .btn-sm {
+    font-size: 0.75rem;
+    padding: 0.35rem 1rem;
+  }
+
+  .btn-ghost {
+    border-color: transparent;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--fg);
+    background: transparent;
+    color: var(--fg);
+  }
+
+  .btn-row {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  /* --- Links --- */
+  .link-inline {
+    color: var(--highlight-fg);
+    text-decoration: none;
+    background: var(--highlight);
+    padding: 0 0.2em;
+    font-weight: 600;
+  }
+
+  .link-inline:hover {
+    background: var(--accent);
+    color: white;
+  }
+
+  .link-plain {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .link-plain:hover {
+    border-bottom: 1.5px solid var(--accent);
+  }
+
+  /* --- Cards --- */
+  .card {
+    border: 1.5px solid var(--rule);
+    padding: var(--space-lg);
+    transition: border-color 0.1s;
+  }
+
+  .card:hover {
+    border-color: var(--fg);
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+  }
+
+  .card-body {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: var(--space-md);
+  }
+
+  .card-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .card-accent {
+    border-left: 3px solid var(--accent);
+  }
+
+  .card-highlight {
+    border-color: var(--fg);
+    background: var(--rule);
+  }
+
+  /* --- Tags --- */
+  .tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    display: inline-block;
+  }
+
+  .tag-active {
+    border-color: var(--fg);
+    color: var(--fg);
+  }
+
+  .tag-accent {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .tag-row {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  /* --- Lists --- */
+  .list-numbered {
+    list-style: none;
+    padding-left: var(--space-lg);
+    border-left: 2px solid var(--rule);
+  }
+
+  .list-numbered li {
+    padding: 0.75rem 0;
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+  }
+
+  .list-numbered li + li {
+    border-top: 1px solid var(--rule);
+  }
+
+  .list-numbered .num {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 600;
+    min-width: 2ch;
+  }
+
+  .list-plain {
+    list-style: none;
+    padding-left: var(--space-lg);
+    border-left: 2px solid var(--rule);
+  }
+
+  .list-plain li {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+  }
+
+  .list-plain li + li {
+    border-top: 1px solid var(--rule);
+  }
+
+  .list-plain li::before {
+    content: '—';
+    color: var(--muted);
+    margin-right: 0.75rem;
+  }
+
+  .list-bullet {
+    list-style: none;
+    padding-left: var(--space-lg);
+    border-left: 2px solid var(--rule);
+  }
+
+  .list-bullet li {
+    padding: 0.4rem 0;
+    font-size: 1rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  .list-bullet li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 0.35em;
+  }
+
+  /* --- Section Headers --- */
+  .section-header-demo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-header-demo .marker {
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .section-header-demo span {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  /* --- Nav --- */
+  .nav-demo {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .nav-demo a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.5rem 1rem;
+    border: 1.5px solid transparent;
+    transition: all 0.1s;
+  }
+
+  .nav-demo a:hover {
+    border-color: var(--fg);
+  }
+
+  .nav-demo a.active {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  /* --- Form Inputs --- */
+  .input {
+    font-family: var(--font);
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    border: 1.5px solid var(--rule);
+    background: var(--bg);
+    color: var(--fg);
+    width: 100%;
+    max-width: 360px;
+    transition: border-color 0.1s;
+    outline: none;
+  }
+
+  .input:focus {
+    border-color: var(--fg);
+  }
+
+  .input::placeholder {
+    color: var(--muted);
+  }
+
+  .input-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    display: block;
+    margin-bottom: var(--space-xs);
+  }
+
+  .input-group {
+    margin-bottom: var(--space-md);
+  }
+
+  /* --- Blockquote --- */
+  .blockquote {
+    padding-left: var(--space-lg);
+    border-left: 3px solid var(--accent);
+    font-size: 1.1rem;
+    font-weight: 500;
+    max-width: var(--measure);
+  }
+
+  .blockquote cite {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: var(--space-sm);
+  }
+
+  /* --- Code --- */
+  .code-inline {
+    background: var(--rule);
+    color: var(--fg);
+    padding: 0.15em 0.4em;
+    font-size: 0.85em;
+  }
+
+  .code-block {
+    background: var(--rule);
+    padding: var(--space-lg);
+    font-size: 1rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    border-left: 3px solid var(--fg);
+  }
+
+  /* --- Dividers --- */
+  .divider-heavy {
+    border: none;
+    border-top: 2px solid var(--fg);
+  }
+
+  .divider-light {
+    border: none;
+    border-top: 1px solid var(--rule);
+  }
+
+  .divider-accent {
+    border: none;
+    border-top: 2px solid var(--accent);
+  }
+
+  /* --- Footer --- */
+  .footer-demo {
+    padding-top: var(--space-md);
+    border-top: 2px solid var(--fg);
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .footer-demo a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .footer-demo a:hover {
+    color: var(--fg);
+  }
+
+  /* =========================================================
+     DEMO LAYOUT HELPERS
+     ========================================================= */
+  .ds-demo-stack > * + * {
+    margin-top: var(--space-md);
+  }
+
+  /* =========================================================
+     THEME PICKER
+     ========================================================= */
+  .theme-picker {
+    margin-bottom: var(--space-xl);
+  }
+
+  .theme-strip {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .theme-swatch {
+    cursor: pointer;
+    border: 2px solid transparent;
+    padding: 0;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    transition: border-color 0.1s;
+    font-family: var(--font);
+  }
+
+  .theme-swatch:hover {
+    border-color: var(--fg);
+  }
+
+  .theme-swatch.active {
+    border-color: var(--fg);
+  }
+
+  .theme-preview {
+    height: 48px;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .theme-preview-bg {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: var(--font);
+  }
+
+  .theme-preview-accent {
+    flex: 1;
+  }
+
+  .theme-preview-highlight {
+    flex: 1;
+  }
+
+  .theme-swatch-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.5rem;
+    text-align: left;
+    background: var(--bg);
+    color: var(--fg);
+  }
+</style>
+</head>
+<body>
+<div class="ds">
+
+  <!-- HEADER -->
+  <div class="ds-header">
+    <h1>Design System</h1>
+    <p>codyloyd.com &mdash; Blueprint Brutalist &mdash; v0.1</p>
+  </div>
+
+  <!-- ============================================
+       01. COLORS
+       ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-header">
+      <div class="marker"></div>
+      <h2>01 &mdash; Colors</h2>
+    </div>
+
+    <div class="theme-picker">
+      <div class="ds-label">Theme Picker</div>
+      <div class="theme-strip" id="theme-strip"></div>
+    </div>
+
+    <hr class="ds-rule">
+
+    <div class="ds-label">Core Palette</div>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-swatch" style="background: #111;"></div>
+        <div class="color-info">
+          <div class="color-name">Foreground</div>
+          <div class="color-var"><code>--fg</code></div>
+          <div class="color-hex">#111111</div>
+          <div class="color-usage">Primary text, active nav, heavy rules, primary buttons</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: #fff; border-bottom: 1px solid #eee;"></div>
+        <div class="color-info">
+          <div class="color-name">Background</div>
+          <div class="color-var"><code>--bg</code></div>
+          <div class="color-hex">#ffffff</div>
+          <div class="color-usage">Page background, inverted text on dark fills</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: #0057ff;"></div>
+        <div class="color-info">
+          <div class="color-name">Accent</div>
+          <div class="color-var"><code>--accent</code></div>
+          <div class="color-hex">#0057ff</div>
+          <div class="color-usage">Section markers, link hover state, accent borders, bullet points</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: #ccff00;"></div>
+        <div class="color-info">
+          <div class="color-name">Highlight</div>
+          <div class="color-var"><code>--highlight</code></div>
+          <div class="color-hex">#ccff00</div>
+          <div class="color-usage">Inline link background, hover state on list items, text emphasis</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: #595959;"></div>
+        <div class="color-info">
+          <div class="color-name">Muted</div>
+          <div class="color-var"><code>--muted</code></div>
+          <div class="color-hex">#595959</div>
+          <div class="color-usage">Secondary text, dates, labels, metadata, footer text</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: #ddd;"></div>
+        <div class="color-info">
+          <div class="color-name">Rule</div>
+          <div class="color-var"><code>--rule</code></div>
+          <div class="color-hex">#eeeeee</div>
+          <div class="color-usage">Light dividers, rail borders, card borders, list separators</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: #d00;"></div>
+        <div class="color-info">
+          <div class="color-name">Danger</div>
+          <div class="color-var"><code>--danger</code></div>
+          <div class="color-hex">#dd0000</div>
+          <div class="color-usage">Reserved for destructive actions or error states only</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-note">
+      The palette is intentionally small. <code>--fg</code> and <code>--bg</code> provide the stark contrast. <code>--accent</code> (blue) is the only chromatic "brand" color and drives all structural markers. <code>--highlight</code> (neon yellow-green) is used sparingly to draw the eye to interactive text. Additional hues should be avoided &mdash; if you need another color, question the component before adding the token.
+    </div>
+
+    <hr class="ds-rule">
+
+    <div class="ds-label">Color Pairings</div>
+    <div class="color-pairing" style="margin-bottom: var(--space-md);">
+      <div class="color-pairing-demo" style="background: #111; color: #fff;">
+        fg on bg &mdash; Primary reading
+      </div>
+      <div class="color-pairing-demo" style="background: #fff; color: #111; border: 1px solid #ddd;">
+        bg on fg &mdash; Inverted (active nav, primary btn)
+      </div>
+      <div class="color-pairing-demo" style="background: #ccff00; color: #111;">
+        highlight-fg on highlight &mdash; Inline links
+      </div>
+      <div class="color-pairing-demo" style="background: #0057ff; color: #fff;">
+        bg on accent &mdash; Link hover, markers
+      </div>
+    </div>
+    <div class="ds-note">
+      Never set text directly in <code>--accent</code> on <code>--bg</code> at small sizes &mdash; the blue is saturated enough to feel straining. Use it as a background or as a small structural element (markers, borders). For text-level emphasis, use <code>--highlight</code> as a background behind <code>--highlight-fg</code> text.
+    </div>
+
+    <hr class="ds-rule">
+
+    <div class="ds-label">Usage Rules</div>
+    <div class="ds-specimen" style="border: none; padding: 0;">
+      <ul class="list-bullet">
+        <li>Use <code class="code-inline">--fg</code> / <code class="code-inline">--bg</code> for all body text. No grays for body copy.</li>
+        <li>Use <code class="code-inline">--muted</code> only for metadata: dates, labels, secondary info. Never for body paragraphs.</li>
+        <li>Use <code class="code-inline">--accent</code> for structural markers (the blue squares) and interactive hover states. Not for body text.</li>
+        <li>Use <code class="code-inline">--highlight</code> for inline link backgrounds and text-level callouts. Always pair with <code class="code-inline">--highlight-fg</code> text (dark in both themes).</li>
+        <li>Use <code class="code-inline">--rule</code> for light dividers and borders. Use <code class="code-inline">--fg</code> for heavy/structural rules (header, footer).</li>
+        <li>Use <code class="code-inline">--danger</code> only for destructive actions. Do not use for decorative purposes.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================
+       02. TYPOGRAPHY
+       ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-header">
+      <div class="marker"></div>
+      <h2>02 &mdash; Typography</h2>
+    </div>
+
+    <div class="ds-label">Typeface</div>
+    <div class="ds-specimen">
+      <div style="font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;">IBM Plex Mono</div>
+      <div style="font-size: 1rem; color: var(--muted); margin-bottom: 1rem;">Weights: 400 Regular &middot; 500 Medium &middot; 600 SemiBold &middot; 700 Bold</div>
+      <div style="font-size: 1rem; line-height: 1.6;">
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+        abcdefghijklmnopqrstuvwxyz<br>
+        0123456789 !@#$%^&*()—
+      </div>
+    </div>
+    <div class="ds-note">
+      One typeface for everything. No serif fallback, no display font. The monospace grid is the identity. Load weights 400, 500, 600, and 700 from Google Fonts.
+    </div>
+
+    <hr class="ds-rule">
+
+    <div class="ds-label">Type Scale</div>
+    <div class="type-scale">
+      <div class="type-row">
+        <div style="font-size: 1.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Site Name</div>
+        <div class="type-meta">1.5rem / 700 / uppercase / 0.08em</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size: 1.1rem; font-weight: 600;">Post Title / Card Heading</div>
+        <div class="type-meta">1.1rem / 600</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size: 1rem; font-weight: 400;">Body Text — This is a sentence at base size.</div>
+        <div class="type-meta">1rem / 400</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em;">Section Label</div>
+        <div class="type-meta">1rem / 700 / uppercase / 0.15em</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">Nav Item / Button / Label</div>
+        <div class="type-meta">0.85rem / 600 / uppercase / 0.1em</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted);">Meta / Date / Caption</div>
+        <div class="type-meta">0.85rem / 600 / uppercase / 0.12em</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted);">Tag / Small Label</div>
+        <div class="type-meta">0.75rem / 700 / uppercase / 0.12em</div>
+      </div>
+    </div>
+
+    <hr class="ds-rule">
+
+    <div class="ds-label">Typography Rules</div>
+    <div class="ds-specimen" style="border: none; padding: 0;">
+      <ul class="list-bullet">
+        <li>Base font size is <code class="code-inline">16px</code>. Line height is <code class="code-inline">1.6</code>.</li>
+        <li>Max reading width is <code class="code-inline">55ch</code>. Body text should never exceed this.</li>
+        <li>All labels, nav items, and metadata are uppercase with letter-spacing. Body text is never uppercase.</li>
+        <li>Use <code class="code-inline">font-weight: 700</code> for labels and headings. Use <code class="code-inline">600</code> for interactive text (links, nav, buttons). Use <code class="code-inline">400</code> for body copy.</li>
+        <li>Letter-spacing increases as size decreases: 0.08em at 1.5rem, 0.12em at 0.75rem. Minimum font size is <code class="code-inline">0.75rem</code> (12px). Most text should be <code class="code-inline">1rem</code> (16px) or larger.</li>
+        <li>Only metadata (dates, labels, tags, captions) drops below <code class="code-inline">1rem</code>. Body copy, lists, cards, inputs, notes, and blockquotes all render at <code class="code-inline">1rem</code>+.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================
+       03. COMPONENTS
+       ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-header">
+      <div class="marker"></div>
+      <h2>03 &mdash; Components</h2>
+    </div>
+
+    <!-- Section Headers -->
+    <div class="ds-label">Section Header</div>
+    <div class="ds-specimen">
+      <div class="section-header-demo">
+        <div class="marker"></div>
+        <span>Section Title</span>
+      </div>
+    </div>
+    <div class="ds-note">
+      Blue square marker + uppercase label. Used to introduce every content section. The marker is always 12&times;12px, colored <code>--accent</code>.
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Navigation -->
+    <div class="ds-label">Navigation</div>
+    <div class="ds-specimen">
+      <div class="nav-demo">
+        <a href="#" class="active">About</a>
+        <a href="#">Fiction</a>
+        <a href="#">Games</a>
+        <a href="#">Music</a>
+      </div>
+    </div>
+    <div class="ds-note">
+      Pill-style nav with transparent borders. Active state inverts to <code>--fg</code> background. Hover shows the border. No background fills on hover &mdash; just the frame.
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Buttons -->
+    <div class="ds-label">Buttons</div>
+    <div class="ds-specimen ds-demo-stack">
+      <div class="btn-row">
+        <button class="btn">Default</button>
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-accent">Accent</button>
+        <button class="btn btn-ghost">Ghost</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-sm">Small Default</button>
+        <button class="btn btn-primary btn-sm">Small Primary</button>
+        <button class="btn btn-accent btn-sm">Small Accent</button>
+      </div>
+    </div>
+    <div class="ds-note">
+      Buttons are uppercase mono with 1.5px borders. Default is outlined; Primary is filled dark; Accent is outlined blue. Ghost has no visible border until hover. All hovers invert. Keep button text short &mdash; one or two words.
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Links -->
+    <div class="ds-label">Links</div>
+    <div class="ds-specimen">
+      <p style="margin-bottom: 1rem;">
+        This is body text with an <a href="#" class="link-inline">inline highlighted link</a> inside it. The highlight draws the eye without breaking the reading flow.
+      </p>
+      <p>
+        This is a <a href="#" class="link-plain">plain link</a> for less emphasis &mdash; used in metadata or footers.
+      </p>
+    </div>
+    <div class="ds-note">
+      Two link styles. <strong>Inline</strong>: neon-yellow background, dark text, turns blue on hover. Use in body content. <strong>Plain</strong>: blue text, underline on hover. Use in nav, footers, metadata.
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Tags -->
+    <div class="ds-label">Tags</div>
+    <div class="ds-specimen">
+      <div class="tag-row">
+        <span class="tag">Default</span>
+        <span class="tag tag-active">Active</span>
+        <span class="tag tag-accent">Accent</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag tag-accent">Game Dev</span>
+      </div>
+    </div>
+    <div class="ds-note">
+      Tags are tiny uppercase pills. Use default for informational, active for selected/current, accent for category highlights.
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Cards -->
+    <div class="ds-label">Cards</div>
+    <div class="ds-specimen">
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">Default Card</div>
+          <div class="card-body">A simple bordered container for content. Border darkens on hover to signal interactivity.</div>
+          <div class="card-meta">Jul 2026</div>
+        </div>
+        <div class="card card-accent">
+          <div class="card-title">Accent Card</div>
+          <div class="card-body">Blue left-border variant. Use for featured items or to group by category.</div>
+          <div class="card-meta">Jun 2026</div>
+        </div>
+        <div class="card card-highlight">
+          <div class="card-title">Highlight Card</div>
+          <div class="card-body">Subtle gray background with dark border. Use for pinned or promoted content.</div>
+          <div class="card-meta">May 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Lists -->
+    <div class="ds-label">Lists &mdash; Numbered</div>
+    <div class="ds-specimen">
+      <ul class="list-numbered">
+        <li><span class="num">01</span> <span>On learning things the hard way</span></li>
+        <li><span class="num">02</span> <span>Why I still use vanilla CSS</span></li>
+        <li><span class="num">03</span> <span>Building a game in 48 hours</span></li>
+      </ul>
+    </div>
+    <div class="ds-note">
+      Numbered list with rail border. Numbers are muted and zero-padded. Use for post lists, steps, or ordered content.
+    </div>
+
+    <hr class="ds-rule">
+
+    <div class="ds-label">Lists &mdash; Dash</div>
+    <div class="ds-specimen">
+      <ul class="list-plain">
+        <li>Fiction and short stories</li>
+        <li>Browser-based games</li>
+        <li>Music recordings and projects</li>
+      </ul>
+    </div>
+
+    <hr class="ds-rule">
+
+    <div class="ds-label">Lists &mdash; Bullet</div>
+    <div class="ds-specimen">
+      <ul class="list-bullet">
+        <li>Blue square bullets match the section markers</li>
+        <li>Use for unordered content where hierarchy doesn't matter</li>
+        <li>Always has the left rail border</li>
+      </ul>
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Blockquote -->
+    <div class="ds-label">Blockquote</div>
+    <div class="ds-specimen">
+      <blockquote class="blockquote">
+        The computer programmer is a creator of universes for which he alone is the lawgiver.
+        <cite>Joseph Weizenbaum</cite>
+      </blockquote>
+    </div>
+    <div class="ds-note">
+      3px blue left-border. Quote text is 500 weight at 1.1rem. Attribution is uppercase muted at 0.85rem.
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Code -->
+    <div class="ds-label">Code</div>
+    <div class="ds-specimen ds-demo-stack">
+      <p>Use <code class="code-inline">const</code> instead of <code class="code-inline">let</code> when the binding won't change.</p>
+      <pre class="code-block">function greet(name) {
+  return `hello, ${name}`;
+}
+
+greet('world');</pre>
+    </div>
+    <div class="ds-note">
+      Inline code gets a light gray background. Code blocks get gray background + dark left-border (using <code>--fg</code>, not <code>--accent</code>, to distinguish code from content).
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Form Inputs -->
+    <div class="ds-label">Form Inputs</div>
+    <div class="ds-specimen">
+      <div class="input-group">
+        <label class="input-label">Email Address</label>
+        <input type="email" class="input" placeholder="you@example.com">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Message</label>
+        <textarea class="input" rows="3" placeholder="Write something..."></textarea>
+      </div>
+      <button class="btn btn-primary">Send</button>
+    </div>
+    <div class="ds-note">
+      Inputs match the system: mono font, light border that darkens on focus. Labels are uppercase micro text. Keep forms minimal.
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Dividers -->
+    <div class="ds-label">Dividers</div>
+    <div class="ds-specimen ds-demo-stack">
+      <div>
+        <div class="ds-note" style="margin: 0 0 var(--space-sm);">Heavy (structural — header, footer)</div>
+        <hr class="divider-heavy">
+      </div>
+      <div>
+        <div class="ds-note" style="margin: 0 0 var(--space-sm);">Light (content separators)</div>
+        <hr class="divider-light">
+      </div>
+      <div>
+        <div class="ds-note" style="margin: 0 0 var(--space-sm);">Accent (section emphasis)</div>
+        <hr class="divider-accent">
+      </div>
+    </div>
+
+    <hr class="ds-rule">
+
+    <!-- Footer -->
+    <div class="ds-label">Footer</div>
+    <div class="ds-specimen">
+      <div class="footer-demo">
+        <span>&copy; 2026</span>
+        <a href="#">Github</a>
+      </div>
+    </div>
+    <div class="ds-note">
+      Heavy top rule (same weight as header). Muted uppercase text. Links lighten on hover. Flex layout pushes content to edges.
+    </div>
+  </div>
+
+  <!-- ============================================
+       04. SPACING
+       ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-header">
+      <div class="marker"></div>
+      <h2>04 &mdash; Spacing</h2>
+    </div>
+
+    <div class="ds-label">Scale</div>
+    <div style="border-left: 2px solid var(--rule); padding-left: var(--space-lg);">
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 0.4rem 0;">
+        <div style="width: var(--space-xs); height: 12px; background: var(--accent);"></div>
+        <code class="code-inline">--space-xs</code>
+        <span style="font-size: 0.85rem; color: var(--muted);">0.25rem (4px)</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 0.4rem 0;">
+        <div style="width: var(--space-sm); height: 12px; background: var(--accent);"></div>
+        <code class="code-inline">--space-sm</code>
+        <span style="font-size: 0.85rem; color: var(--muted);">0.5rem (8px)</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 0.4rem 0;">
+        <div style="width: var(--space-md); height: 12px; background: var(--accent);"></div>
+        <code class="code-inline">--space-md</code>
+        <span style="font-size: 0.85rem; color: var(--muted);">1rem (16px)</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 0.4rem 0;">
+        <div style="width: var(--space-lg); height: 12px; background: var(--accent);"></div>
+        <code class="code-inline">--space-lg</code>
+        <span style="font-size: 0.85rem; color: var(--muted);">1.5rem (24px)</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 0.4rem 0;">
+        <div style="width: var(--space-xl); height: 12px; background: var(--accent);"></div>
+        <code class="code-inline">--space-xl</code>
+        <span style="font-size: 0.85rem; color: var(--muted);">2rem (32px)</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 0.4rem 0;">
+        <div style="width: var(--space-2xl); height: 12px; background: var(--accent);"></div>
+        <code class="code-inline">--space-2xl</code>
+        <span style="font-size: 0.85rem; color: var(--muted);">3rem (48px)</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 0.4rem 0;">
+        <div style="width: var(--space-3xl); height: 12px; background: var(--accent);"></div>
+        <code class="code-inline">--space-3xl</code>
+        <span style="font-size: 0.85rem; color: var(--muted);">4rem (64px)</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 0.4rem 0;">
+        <div style="width: var(--space-4xl); height: 12px; background: var(--accent);"></div>
+        <code class="code-inline">--space-4xl</code>
+        <span style="font-size: 0.85rem; color: var(--muted);">6rem (96px)</span>
+      </div>
+    </div>
+
+    <div class="ds-note" style="margin-top: var(--space-md);">
+      Use <code>--space-md</code> as the default gap. Use <code>--space-lg</code> for component padding. Use <code>--space-2xl</code> or larger between sections. Content max-width is <code>680px</code>. Page padding is <code>2rem</code> horizontal.
+    </div>
+  </div>
+
+  <!-- ============================================
+       05. LAYOUT PRINCIPLES
+       ============================================ -->
+  <div class="ds-section">
+    <div class="ds-section-header">
+      <div class="marker"></div>
+      <h2>05 &mdash; Layout Principles</h2>
+    </div>
+
+    <ul class="list-bullet">
+      <li>Single column, max-width <code class="code-inline">680px</code>, centered.</li>
+      <li>Left-border rails (<code class="code-inline">2px solid --rule</code>) to group related content. The rail is the primary structural device.</li>
+      <li>Blue square markers (<code class="code-inline">12&times;12px --accent</code>) introduce each section. They are the visual anchor.</li>
+      <li>Heavy rules (<code class="code-inline">2px solid --fg</code>) for structural boundaries: header bottom, footer top. Light rules (<code class="code-inline">1px --rule</code>) for content separators within sections.</li>
+      <li>No rounded corners anywhere. No shadows. No gradients.</li>
+      <li>Transitions are <code class="code-inline">0.1s</code> for interactive states. No easing — linear or step. No animation for non-interactive elements.</li>
+      <li>Mobile: the layout is already single-column. Reduce page padding to <code class="code-inline">1rem</code> below <code class="code-inline">480px</code>.</li>
+    </ul>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-demo" style="margin-top: var(--space-3xl);">
+    <span>Design System v0.1</span>
+    <span>Blueprint Brutalist</span>
+  </div>
+
+</div>
+
+<script>
+const THEMES = [
+  {
+    name: 'Blueprint',
+    bg: '#ffffff',
+    fg: '#111111',
+    accent: '#0057ff',
+    highlight: '#ccff00',
+    highlight_fg: '#111111',
+    muted: '#595959',
+    rule: '#eeeeee',
+    danger: '#dd0000',
+  },
+  {
+    name: 'Midnight',
+    bg: '#141418',
+    fg: '#e4e4e7',
+    accent: '#3b82f6',
+    highlight: '#ccff00',
+    highlight_fg: '#141418',
+    muted: '#8b8b96',
+    rule: '#2a2a2e',
+    danger: '#ef4444',
+  },
+];
+
+function buildPicker() {
+  const strip = document.getElementById('theme-strip');
+  THEMES.forEach((theme, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'theme-swatch' + (i === 0 ? ' active' : '');
+    btn.innerHTML = `
+      <div class="theme-preview">
+        <div class="theme-preview-bg" style="background:${theme.bg};color:${theme.fg};">Aa</div>
+        <div class="theme-preview-accent" style="background:${theme.accent};"></div>
+        <div class="theme-preview-highlight" style="background:${theme.highlight};"></div>
+      </div>
+      <div class="theme-swatch-label">${theme.name}</div>
+    `;
+    btn.addEventListener('click', () => applyTheme(theme, btn));
+    strip.appendChild(btn);
+  });
+}
+
+function applyTheme(theme, btn) {
+  const root = document.documentElement;
+  root.style.setProperty('--bg', theme.bg);
+  root.style.setProperty('--fg', theme.fg);
+  root.style.setProperty('--accent', theme.accent);
+  root.style.setProperty('--highlight', theme.highlight);
+  root.style.setProperty('--highlight-fg', theme.highlight_fg);
+  root.style.setProperty('--muted', theme.muted);
+  root.style.setProperty('--rule', theme.rule);
+  root.style.setProperty('--danger', theme.danger);
+
+  document.querySelectorAll('.theme-swatch').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+
+  updateSwatches(theme);
+}
+
+function updateSwatches(theme) {
+  const cards = document.querySelectorAll('.color-card');
+  const map = [
+    { key: 'fg', label: 'Foreground' },
+    { key: 'bg', label: 'Background' },
+    { key: 'accent', label: 'Accent' },
+    { key: 'highlight', label: 'Highlight' },
+    { key: 'muted', label: 'Muted' },
+    { key: 'rule', label: 'Rule' },
+    { key: 'danger', label: 'Danger' },
+  ];
+  cards.forEach((card, i) => {
+    if (!map[i]) return;
+    const swatch = card.querySelector('.color-swatch');
+    const hex = card.querySelector('.color-hex');
+    const val = theme[map[i].key];
+    if (swatch) swatch.style.background = val;
+    if (hex) hex.textContent = val;
+  });
+
+  const pairings = document.querySelectorAll('.color-pairing-demo');
+  if (pairings.length >= 4) {
+    pairings[0].style.background = theme.fg;
+    pairings[0].style.color = theme.bg;
+    pairings[1].style.background = theme.bg;
+    pairings[1].style.color = theme.fg;
+    pairings[1].style.borderColor = theme.rule;
+    pairings[2].style.background = theme.highlight;
+    pairings[2].style.color = theme.highlight_fg;
+    pairings[3].style.background = theme.accent;
+    pairings[3].style.color = theme.bg;
+  }
+}
+
+buildPicker();
+</script>
+</body>
+</html>

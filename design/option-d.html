@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option D — Newsprint Brutalist</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f0ece4;
+    --fg: #1a1a1a;
+    --accent: #1a1a1a;
+    --muted: #8a8578;
+    --rule: #c8c2b6;
+    --red: #b81c1c;
+  }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.65;
+    font-size: 14px;
+  }
+
+  .site {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* masthead */
+  header {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 4px double var(--fg);
+    margin-bottom: 0.5rem;
+  }
+
+  .edition {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .dek {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  /* nav */
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 3rem;
+  }
+
+  nav a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 500;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -0.6rem;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.15s;
+  }
+
+  nav a:hover::after,
+  nav a.active::after {
+    transform: scaleX(1);
+  }
+
+  /* page */
+  .kicker {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  .page-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .byline {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 1.5rem;
+  }
+
+  .content {
+    columns: 2;
+    column-gap: 2.5rem;
+    column-rule: 1px solid var(--rule);
+  }
+
+  .content p {
+    margin-bottom: 1.2rem;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .content a {
+    color: var(--red);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .content a:hover {
+    border-bottom: 1px solid var(--red);
+  }
+
+  .dropcap::first-letter {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3.4rem;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.15em;
+    margin-top: 0.05em;
+  }
+
+  /* post list as headlines */
+  .headlines {
+    margin-top: 4rem;
+    border-top: 4px double var(--fg);
+    padding-top: 1.5rem;
+  }
+
+  .headlines-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .headlines ul {
+    list-style: none;
+  }
+
+  .headlines li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+  }
+
+  .headlines a {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    color: var(--fg);
+    text-decoration: none;
+    line-height: 1.2;
+  }
+
+  .headlines a:hover {
+    color: var(--red);
+  }
+
+  .headlines .date {
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+  }
+
+  footer {
+    margin-top: 4rem;
+    text-align: center;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  @media (max-width: 600px) {
+    .content { columns: 1; }
+    .name { font-size: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="site">
+  <header>
+    <div class="edition">Personal Site &middot; Est. 2016</div>
+    <div class="name">Cody Loyd</div>
+    <div class="dek">Programmer &middot; Writer &middot; Musician</div>
+  </header>
+
+  <nav>
+    <a href="#" class="active">About</a>
+    <a href="#">Fiction</a>
+    <a href="#">Games</a>
+    <a href="#">Music</a>
+  </nav>
+
+  <main>
+    <div class="kicker">Introduction</div>
+    <div class="page-title">About the Author</div>
+    <div class="byline">Cody Loyd &middot; Rural Missouri</div>
+    <div class="content">
+      <p class="dropcap">For better or worse, I am a completely self-taught programmer. For years I worked as a high school band teacher in a small school district in Missouri, but in April of 2016 I decided to learn to code. I've written about that journey a bit <a href="#">here</a>. (I really should move that article to my own blog shouldn't I)</p>
+      <p>I live in rural Missouri with my wife, four children and a dog. When I'm not programming I'm usually writing fiction, making music, or building small games. This site is where all of those things live.</p>
+    </div>
+
+    <div class="headlines">
+      <div class="headlines-label">Latest Writing</div>
+      <ul>
+        <li><a href="#">On Learning Things the Hard Way</a> <span class="date">Jul 14, 2026</span></li>
+        <li><a href="#">Why I Still Use Vanilla CSS</a> <span class="date">Jun 02, 2026</span></li>
+        <li><a href="#">Building a Game in 48 Hours</a> <span class="date">May 19, 2026</span></li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Cody Loyd &middot; Built by Hand
+  </footer>
+</div>
+</body>
+</html>

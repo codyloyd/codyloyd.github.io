@@ -1,0 +1,234 @@
+---
+layout: post.njk
+title: "Rat"
+date: 2022-04-01
+tags:
+  - fiction
+permalink: /2022/rat/
+---
+
+Rat stepped quickly through the damp woods trying to decide if he was going to rob a grave that night. He deftly ducked around and under dead branches, his small body an asset in this terrain, the shovel he carried less so. His hair was rough-chopped to the scalp. He had dirt under his fingernails and a scowl on his face.
+
+The Great-And-Mighty Valakar, ole take-a-whiz himself, had sent Rat to obtain one last prop—the arm or leg bone from a recently deceased adult human male—for a summoning spell he intended to work at dawn.
+
+But Rat was no dummy. He’d been watching. Ole Whiz rarely let him stay in the room when the actual spells were cast, but he often listened through the door. He read the books that Valakar left lying around. He was often charged with gathering the props. He *knew *things.
+
+He knew that summonings were precarious spells. The slightest deviation in props could cause some real trouble. Not long ago, he had been ordered to obtain the root of a withered dandelion, but he could only find fresh yellow ones. The summoning worked but brought the wrong target. Instead of calling up the ghost of the last Fairy Queen, it called her still-living daughter, who had been in the middle of a bath and was understandably not very happy about the situation.
+
+Rat had listened at the door hearing the stern wizard being lectured by someone half his size.
+
+Valakar was enraged. After sending Princess half-pint back to wherever she came from, he burst into the hallway. He picked up Rat by his dirty patched shirt and threw him back against the wall.
+
+“When I tell you what to get, I always tell you with precise detail! *The props matter!*” Valakar stepped to where Rat lay on the floor, picked him up again, and yelled in his face. “GET THE RIGHT ONE. NOW!”
+
+Summonings were precarious spells, and this time, Valakar intended to summon something a little more dangerous than a prissy naked fairy.
+
+Rat came to a clearing with a murky, steaming pond. As he skirted the edge, frogs plopped into the water sending ripples of moonlight shimmering across the surface. A mosquito bit him on the cheek. His scowl deepened and he trudged on.
+
+He had been daydreaming about killing the wizard since the day he had been snatched off the street. One night he had fallen asleep, huddled in the back corner of a dead-end alley, comfortable hiding under a pile of empty fish crates. When he woke up, the slimy familiar cobblestones were gone, replaced by smooth white sheets. He was in a bedroom. *His bedroom*, the wizard told him, before kicking him and telling him to get to work. Did Rat want a bedroom? Did he want to get beat around by Mister Pony-Tail all day? No. He was perfectly happy living on the street, slipping coins from purses to buy himself some bread.
+
+The past few years with the wizard had been hard. There were advantages—the bed wasn’t so bad, really–but Valakar was cruel. He seemed to relish giving Rat impossible tasks and then beating him when he couldn’t fulfill them. Sneaking into the nearby town of Gradham to dig up a grave wasn’t an unusual sounding request.
+
+Spell props correlated in a way to their desired effect. They’d grabbed the dripping princess instead of her ghostly mother because he’d brought a fresh dandelion instead of a dead one. This time, Valakar had specified a human arm or leg bone, and fresh. Rat could get an older one and possibly pass that off, though the wizard might notice that it was dried out.
+
+He could also get one that wasn’t human.
+
+If Rat could fetch the right prop, this summoning would bring something more powerful than the wizard could handle. And, if Valakar the Magnificent happened upon an early demise then who better to don the heavy robe and take over his lucrative enterprise? The Wizard Barrat of the Dark Tower had a nice fairy-tale ring to it.
+
+Goblin bones, Rat supposed, had to be pretty similar to human bones, and he knew where to find them. He pressed on, his mind made up. When he came to the little road that led into town, where he could find a fresh leg-of-man, he crossed and walked deeper into the forest.
+
+Goblins were only dangerous when you pissed them off. Most of the time, they stayed clear of humans, and humans avoided them. “They’re more scared of you than you are of them!” was the common line murmured by young men when they were trying to act brave in front of young ladies. Goblins didn’t come into towns to rape and kill unless they had been duly provoked. Unfortunately, hacking off the limb of one of their recently deceased was likely to upset them, so Rat had to be careful.
+
+They lived in mud huts in the forest and spent most of their time drinking the harsh liquor that they made in their own crude stills. Sometimes they would gather berries or trap small game to trade with humans, but most of their life was dull and lazy. Rat had read quite a lot about them and had even traded with them once, seeking a prop for one of Valakar’s spells (tooth of goblin).
+
+Rat also knew where they kept their dead. Goblins didn’t believe in burying their dead like the humans. They took their loved ones up to a rocky clearing near their village and lay them out under the sky where their bodies would be eventually consumed by whatever scavengers happened by. “Returning to nature” or some nonsense.
+
+He crept his way through the woods headed for this sacred goblin graveyard. He hadn’t been there before, but he had been to their village and he thought he knew the general direction. As he walked, he practiced the one spell he thought he had mastered. It was one of the first he had learned, from a book that Mr. Leaves-Things-Lying-Around had left sitting open on the dining room table. It was some kind of invisibility spell. Rat took a breath, touched his power and silently mouthed the word “*Palliar*”. Beginning the spell was simple, but it had taken a lot of midnight practice for him to be able to hold on to his power long enough to stay hidden.
+
+When he approached goblin-town he slowed, turning around the community of mud homes, hoping to avoid arousing suspicion. His invisibility spell didn’t mask the sounds of tromping through the forest.
+
+It didn’t take him long to find the bodies. The smell helped. He came up to a rocky clearing where there were several bodies laying, in various states of decay. At his approach, a handful of dark birds were scared into the trees. The sudden sound of their flight froze Rat in his steps for a moment, and caused him to drop his spell. Once he had caught his breath and stilled his rapidly beating heart he sat his shovel down against a tree and tip-toed into the clearing.
+
+Most of the bodies had been there a long time. Some of them were no more than a jumbled pile of bones, though there were a couple of fresh ones. He made his way over to the closest one, loosened the big knife at his belt and got to work.
+
+Stinking leg-bone in hand, Rat retraced his path, skirting the goblin village. The aptly named ‘Dark Tower’ was situated deep, but not too deep in the forest, with only a small path leading to it’s front door. Valakar, apparently, wanted to make sure his abode was threatening—hence the ‘dark’—but he needed to make sure his patrons could actually get to him to request his services.
+
+The tower’s black stonework reached just above the tops of the trees. Standing atop it, one could see Gradham to the west where Rat was supposed to exhume a freshly planted human. To the east, on a clear day, could be seen the larger city of Otterberg. The Goblin settlement was directly south, but the only indication of it’s existence was the occasional plume of smoke rising from the woods.
+
+When he approached the clearing surrounding the Tower, Rat stopped to double-check the bone. It would not do to leave even the smallest bit of stinking green flesh, lest Valakar discover his deception and ruin the plan, likely earning Rat a hefty beating, or some unbearable chore. Probably both.
+
+As it turned out, Goblin bones did resemble human bones. Satisfied that he had cleaned it as well as he could, Rat walked up to the tower, took a deep breath and entered.
+
+Valakar’s working room took up the nearly entirety of the top floor of the tower. There was a small hallway on one side where the stairs came up and where Rat stood, composing himself one last time before knocking on the door.
+
+“Enter”
+
+He entered.
+
+“Put the bone on the floor there at the top of the circle.” Valakar’s voice was deep and booming, even when he spoke softly. Ye olde great-and-mighty sat at his large wooden desk, head down, scribbling in a huge leather bound book, and didn’t look up as Rat delivered the final prop to it’s resting place at the top of a large circle that had been painted on the floor in the middle of the room. Rat stepped carefully around the other props that had been placed in precise locations around the circle. A severed, rotting goat’s head, a small bundle of firegrass and a couple of piles of ash, no doubt specific items that had been burnt in the wizard’s brazier. Valakar was intending to call upon a demon.
+
+He’d done this before. Three days ago, Rat had been sent to decapitate the very goat whose head now adorned the floor, and then listened through the door as Valakar summoned a denizen of the underworld.
+
+Actually, aforementioned denizen was more of a bookkeeper of some sort.
+
+“Valakar buddy! It’s been a while! I was beginning to wonder if you had forgotten about me!” The voice was high pitched and expressive, not particularly demonic.
+
+Valakar sounded as stern as usual. “Tadj’garog, keeper of souls, you have been called forth for an accounting of a specific piece of information. Your recompense, as usual is a boon of your choice.”
+
+The demon gave a sneezy-sounding chuckle. “Valkey my friend, Just call me Ted, and take it easy with that whole ‘keeper of souls’ bit. Bossman likes that title for himself. I just keep the books.”
+
+The wizard paused for a second and continued, asking the questions he had summoned Ted to ask. Something about a princess gone missing and “are you sure she has not yet graced your doorstep?” (she hadn’t).
+
+After he had gotten the answers he was looking for the wizard said, “Tadj’garog, tell me the boon of your choosing.”
+
+“Aw, we don’t need to do all that now. I’m happy to help.”
+
+“It’s customary, demon.”
+
+There was a moment of silence and then, “Well, if you insist. I’ll….. I’ll take this bone here. Is that human?”
+
+“It is.”
+
+“Ah great. The wifey makes an incredible human stock.”
+
+“It’s yours then. When you’re ready, please have a seat so I can send you back.”
+
+Rat was not sure what kind of demon the goblin bone would summon, but it surely wouldn’t be Ted. He placed it gently in it’s proper place and began to retreat to the hallway.
+
+“Stop.” He said it softly, with no malice. Just a simple command. Rat stopped. Turned and looked at the wizard.
+
+The wizard looked at Rat with his dark eyes. “It’s close enough to dawn now, let’s get to work.”
+
+Rat nodded slowly. Valakar looked at him with a menacing grin and walked toward the circle. “Summonings are actually among the most simple spells to do, provided you have the correct props.” He said. “I know you’ve been watching, listening at the door. I know you’ve been reading the books I’ve left for you. I want you to do this one. I’ll give you the words.”
+
+Rat could have vomited. His chest was tight, his shoulders tense. This was not part of the plan. He wasn’t sure what to do. He couldn’t admit that he was planning on killing the wizard.
+
+“Sir, can you remind me what kind of bone I was to fetch? I’m… not quite sure I got the right one.”
+
+Valakar grinned again. “I’m sure it’s fine boy. Stand next to the circle.”
+
+Rat stepped up to the edge.
+
+“Not that close, take a step back. Good. Now, recite *Calgra tuoth, menisturam*”
+
+Rat recited.
+
+“*Calgra tuoth, sevetheroh*”
+
+Rat repeated the words perfectly. He was tempted to mess them up, to avoid whatever came next, but was afraid of even worse consequences.
+
+“Now, lift your hands, touch your power.”
+
+Rat looked at him.
+
+The wizard rolled his eyes. “I know you have touched the power boy that’s why I picked you up off the street in the first place. Do it! Now:* Calgra tuoth, CALGRA!*”.
+
+Rat swallowed, took a deep breath and said the words.
+
+The circle filled instantly with a swirling cloud of dark smoke. Rat heard Valakar’s menacing laugh, but Rat was focused on the cloud. The smell of fire, of charred roasting meat, filled the room and a deep gravelly voice scraped from inside the cloud.
+
+“*COUROTH, MALTHINISCUM*”
+
+The cloud dispersed almost at once and standing in the circle was… a demon. Rat didn’t waste any time inspecting the beast. It was huge. It’s skin was dark gray. Horns. Claws. Time to go.
+
+Rat sprinted to the door. Locked.
+
+He looked to Valakar, but the wizard was gone. Crap.
+
+The beast looked around the room and then back to Rat, lowered it’s head and scowled menacingly. It growled softly and bent it’s legs like a cat about to pounce.
+
+“Ah, hello…” Rat said. “Do you happen to know a charming fellow by the name of Ted? I, ah, I think he works with you.”
+
+The beast bellowed and exploded into motion. Rat was ready though, and he was quick. He ran and ducked behind Valakar’s desk. The beast turned, grabbed the desk and threw it across the room, smashing it to splinters against the far wall.
+
+The room was full of wizardy miscellania, but none of it seemed appropriate for fighting a demon. Rat scrambled back from the approaching demon looking wildly for anything he could use. He found a broom. The demon ripped it from his hands and broke it like a twig.
+
+The demon grabbed Rat by the shirt and lifted him. Standing straight, the demon’s horns scraped the ceiling. He pulled Rat so that they were face to face, the fire and brimestone stench burning Rat’s nostrils.
+
+“*COUROTH, MALTHINISCUM. TOTH*.”
+
+“Ah… yes, I, uh. I don’t speak demon, sir.”
+
+The demon snarled. A low growl rattling Rat’s ribcage.
+
+And then, a voice in his head. “He’s asking your name, boy. Your given name.”
+
+“I’m Rat.” He said. The demon’s twisted snarl deepened and his grip on Rat’s shirt tightened. “Uh.. Barrat. My name is Barrat. They call me Rat.”
+
+The demon sat him down. “*COUROTH, BARRAT. MINISCULA SOLISHIMA TOUSPARA*.” The demon stepped back, brought it’s enormous clawed hands together and lowered it’s head, bowing.
+
+“He’s going to kill you now,” said the voice in his head. Valakar.
+
+“What!?” Rat shouted. The demon snapped it’s head up, it’s mouth open in an evil toothy grin.
+
+“He just challenged you to a duel.” Valakar’s voice echoed in Rat’s head. “He’s not very happy about being called here. Apparently he was on a date with his betrothed.”
+
+“*TOUSPARA, BARRAT*.” Said the demon, and then once again it pounced.
+
+Rat dove out of the way, racing around behind the hulking beast. The room was large, but so was the demon, there wasn’t much room to run. The demon picked up a chair and threw it. Rat ducked and it exploded against a bookshelf behind him, books flying. The demon picked up and threw the goat’s head, which splattered and stuck to the wall.
+
+“Stop running and fight boy!” Valakar said.
+
+Rat dodged and something else crashed into the wall behind him spilling the wizard’s smoking brazier. Glowing embers scattered landing among the detritus that was littering the floor.
+
+“Come on now boy, either finish this, or die before you burn my whole damn tower down.”
+
+Rat picked up a broken chair leg and brandished it like a club, stepping towards the smoking pile of books. When the demon turned to face him, Rat used the club to fling a smoking book at the demon.
+
+“You really think FIRE is going to stop him? You’re just spreading it around. THINK boy! You wanted to be a wizard! Do some wizarding!”
+
+Well. That was an idea.
+
+“*Palliar*,” He whispered. It worked, but wasn’t enough. He could dodge the demon for a while, but the room wasn’t big enough to avoid it forever. He couldn’t hold it forever, and he was already tired.
+
+Rat was aware of a fireball spell but hadn’t been brave enough try it out yet. Better that than dying right? He touched his power, thought flamey thoughts and flicked his hand at the demon saying “*Ignisym*”.
+
+It wasn’t much. Just a spark. The demon laughed and lunged again at the source of the spark. Rat dove out of the way but it’s clawed hand caught Rat in the leg and tore a huge gash, ripping through his calf muscle.
+
+“It’s now or never,” Said Valakar. “I told you fire wouldn’t do it.”
+
+Rat fell. He dropped the spell. The demon, stood up looking proud and lazily walked toward where he lie bleeding on the floor.
+
+“Try this one,” said Valakar. “You want to throw him out. Visualize that and say *exhilium*.”
+
+The demon picked Rat from the floor and again brought him face to face. “*TOUSPARA, BARRAT*.” it said.
+
+“*Exhilium*” Rat whispered.
+
+The demon dropped Rat and flew back, shaking the tower when it smashed against the wall.
+
+“Again!” growled Valakar. He was now standing next to where Rat lay crumpled on the ground.
+
+Rat sat up. “*EXILIUM*!”
+
+The beast burst through the wall, flying backwards and falling into the forest. Dust and rock following him down.
+
+“He’s not going to be very happy about that” said Valakar, walking to the gaping hole in the side of the tower. “But I’d say you won the duel.” Without turning, he waved a hand at the smouldering debris, quenching the fire.
+
+Rat, exhausted and dizzy, lay his head back and continued to bleed on the floor.
+
+“Hmmmm, the town is on fire,” Valakar pointed to the west. “Guessing the goblins discovered your theft already. You left the shovel.”
+
+Rat said nothing.
+
+He heard Valakar walk back across the room toward him. He kicked Rat in the good leg. “Come on boy. We’ve got a few messes to clean up tonight. Stop bleeding on my floor.”
+
+“…my leg” whimpered Rat.
+
+“You are a slow learner. I’ve been leaving books lying around for months. You mean to tell me you haven’t tried learning any healing spells?”
+
+Rat frowned at the wizard, who rolled his eyes.
+
+“The simplest one is *Sanitat*. It should get you back on your feet anyway.”
+
+It did.
+
+Rat limped over to the gaping hole in the side of the Tower and Valakar joined him. The sun was just starting to rise over the horizon, bathing the trees in a pleasant, warm glow. To the west, the sky was marred by a dark cloud of smoke.
+
+“I meant for you to banish Za`glath back to the underworld, but throwing him out of the tower worked well enough.”
+
+“Sorry, sir”
+
+“We’ll still need to get him out of here before he comes back and knocks the tower over. Then we’ll need to take care of the goblins, they don’t particularly appreciate desecration.”
+
+They stood for a moment watching the sunrise then Valakar turned and walked to the door. As he started down the stairs he called back, “Bring that bone, it might come in useful!”

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C3 — Highlight Notch</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #fff; --fg: #111; --accent: #0057ff; --highlight: #ccff00;
+    --highlight-fg: #111; --muted: #595959; --rule: #eee;
+  }
+  [data-theme="dark"] {
+    --bg: #141418; --fg: #e4e4e7; --accent: #3b82f6; --highlight: #ccff00;
+    --highlight-fg: #141418; --muted: #8b8b96; --rule: #2a2a2e;
+  }
+  body { font-family: 'IBM Plex Mono', monospace; background: var(--bg); color: var(--fg); font-size: 16px; line-height: 1.6; }
+  .site { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* === C3: Neon-yellow notch instead of blue, nav cells with active highlight === */
+
+  .site-header { margin-bottom: 3rem; }
+
+  .name-bar {
+    background: var(--fg);
+    color: var(--bg);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .name-bar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--highlight);
+  }
+
+  .site-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    color: var(--bg);
+    padding-left: 0.25rem;
+  }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--bg);
+    width: 1.75rem;
+    height: 1.75rem;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .theme-toggle::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--bg);
+  }
+  [data-theme="dark"] .theme-toggle::before {
+    background: none;
+    border: 2px solid var(--bg);
+    inset: 3px;
+  }
+
+  nav {
+    display: flex;
+    gap: 0;
+  }
+  nav a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.6rem 1rem;
+    flex: 1;
+    text-align: center;
+    border-bottom: 2px solid var(--rule);
+    transition: all 0.1s;
+  }
+  nav a:hover {
+    border-bottom-color: var(--fg);
+  }
+  nav a.active {
+    background: var(--highlight);
+    color: var(--highlight-fg);
+    border-bottom-color: var(--fg);
+    font-weight: 700;
+  }
+
+  .demo-content { padding-left: 1.5rem; border-left: 2px solid var(--rule); color: var(--muted); max-width: 55ch; margin-top: 2rem; }
+  .section-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
+  .marker { width: 12px; height: 12px; background: var(--accent); flex-shrink: 0; }
+  .section-header h2 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; }
+  .label { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 1.5rem; }
+  .switcher { position: fixed; top: 1rem; right: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; padding: 0.4rem 0.8rem; background: var(--fg); color: var(--bg); border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; z-index: 10; }
+</style>
+</head>
+<body>
+<button class="switcher" onclick="toggle()">Toggle dark</button>
+<div class="site">
+  <div class="label">C3 — Highlight Notch</div>
+  <header class="site-header">
+    <div class="name-bar">
+      <a href="#" class="site-name">Cody Loyd</a>
+      <button class="theme-toggle" aria-label="Toggle dark mode" onclick="toggle()"></button>
+    </div>
+    <nav>
+      <a href="#" class="active">About</a>
+      <a href="#">Fiction</a>
+      <a href="#">Games</a>
+      <a href="#">Music</a>
+    </nav>
+  </header>
+  <main>
+    <div class="section-header"><div class="marker"></div><h2>Writing</h2></div>
+    <div class="demo-content">
+      <p>The left notch uses the neon-yellow highlight color instead of blue — ties the header to the inline link treatment used in body content. Active nav gets a highlight fill instead of the inverted dark. Nav uses bottom-border indicators instead of cell dividers.</p>
+    </div>
+  </main>
+</div>
+<script>function toggle(){const h=document.documentElement;h.getAttribute('data-theme')==='dark'?h.removeAttribute('data-theme'):h.setAttribute('data-theme','dark');}</script>
+</body>
+</html>
