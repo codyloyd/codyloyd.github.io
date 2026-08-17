@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Patterns: Singleton — Cody Loyd</title>
+  <meta name="description" content="Personal blog and website of Cody Loyd">
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<script>
+  function toggleTheme() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+</script>
+<div class="site">
+  <header class="site-header">
+    <div class="name-bar">
+      <a href="/" class="site-name">Cody Loyd</a>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+    </div>
+    <div class="accent-seam"></div>
+    <nav>
+      <a href="/writing/">Writing</a>
+      <a href="/fiction/">Fiction</a>
+      <a href="/games/">Games</a>
+      <a href="/music/">Music</a>
+      <a href="/about/">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+  <div class="section-header">
+    <div class="marker"></div>
+    <h1>Design Patterns: Singleton</h1>
+  </div>
+  <div class="post-header content-rail">
+    <div class="post-meta">
+      <time datetime="March 8, 2021">March 8, 2021</time>
+      
+        
+          <span class="tag">Design Patterns</span>
+        
+          <span class="tag">JavaScript</span>
+        
+      
+    </div>
+  </div>
+  <div class="post-content">
+    <p>This series of posts covers the patterns presented in the classic book &quot;<a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612">Design Patterns: Elements of Reusable Object-Oriented Software</a>.&quot; Here I break down the patterns and show examples in modern JavaScript.</p>
+<p>The Singleton pattern is a fairly simple concept.  A Singleton is a class that protects itself from being instantiated multiple times.  Basically, you would use a Singleton for a global object used in many places but should only be created once.</p>
+<p>Singletons are a good place to store variables that need to remain global.  Wrapping global variables in a Singleton helps declutter namespace and helps to control access to these variables.  Accessing and manipulating variables through a controlled Singleton interface can help reduce bugs created by protecting variables used in multiple places throughout a program.</p>
+<p>Reducing global variables is always a worthy goal, so Singletons are best used sparingly, but there is so often some need for some global information that getting familiar with this pattern will be useful.</p>
+<p>As I mentioned before, the Singleton's main feature is that it includes a way to limit the number of instances that can be created of a given object.  In JavaScript, there are a few ways to manage this, of which we will discuss three,  IIFE, classes, and modules.</p>
+<h2>IIFE</h2>
+<p>The Immediately Invoked Function Expression or module is the classic way of solving this problem in JavaScript.  With an IIFE, you can set up a globally available object that cannot be instantiated in any other way.  The basic pattern looks like this:</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> mySingleton <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   <span class="token keyword">const</span> object <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+   <span class="token comment">// set up object here</span>
+
+   <span class="token keyword">return</span> object
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span></code></pre>
+<p>There are a few downsides to this method, though, that may warrant using something else.  First, this will be called, and the object will be created when the program initially runs, so it won't do if you need to fetch some data or get some user input before creating this object.  Second, with a more evolved version of this pattern, you can bake in some more interesting access methods.  For instance,  you could create a Singleton that allows you to create and manage multiple instances that are still controlled and still have protected access.</p>
+<h2>Classes</h2>
+<p>The Gang of Four wrote the original Design Patterns book primarily with C++ (and a little Smalltalk).  There are some differences between what you can do in C++ and JavaScript in your classes, and because of that, native JS classes might not be the best option for your Singletons.</p>
+<p>Classically, Singletons protect themselves from being instantiated multiple times by forcing users to access it through a special function instead of the usual <code>new MyObject()</code>.</p>
+<p>In this example, the class stores it's single instance in <code>this._instance</code> and the appropriate way to access it is through the static method <code>Singleton.instance()</code></p>
+<pre class="language-js"><code class="language-js"><span class="token comment">//this does not protect against users just doing new Singleton()</span>
+<span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">className</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_instance <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>number <span class="token operator">=</span> <span class="token number">0</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>_instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>_instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_instance
+  <span class="token punctuation">}</span>
+
+  <span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>number <span class="token operator">++</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">the number is </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>number<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> singleton <span class="token operator">=</span> Singleton<span class="token punctuation">.</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// the number is 1</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// the number is 2</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// the number is 3</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// the number is 4</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'another instance:'</span><span class="token punctuation">)</span>
+<span class="token keyword">this</span> <span class="token keyword">new</span> <span class="token class-name">instance</span> should actually reference the original instead <span class="token keyword">of</span> creating a <span class="token keyword">new</span> <span class="token class-name">one</span>
+<span class="token keyword">const</span> secondSingleton <span class="token operator">=</span> Singleton<span class="token punctuation">.</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+secondSingleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// the number is 5</span>
+secondSingleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// the number is 6</span></code></pre>
+<p>The big issue here is that in JavaScript we don't have a good way to disallow  users from just doing <code>new Singleton()</code> wherever they want in their code.  Other languages allow you to protect or override the constructor to stop that, but in JS we have to get a little tricky.</p>
+<p>One (admittedly silly) way to do this is by forcing the use of a passcode to instantiate the singleton.  In the following example, anyone can still technically do <code>new Singleton()</code> but unless they provide the correct <code>methodOfAccess</code> as a parameter it will fail and throw an error encouraging the use of the correct method.  Obviously, this isn't real protection and I&quot;m not sure I'd actually recommend it.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">methodOfAccess</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>methodOfAccess <span class="token operator">!==</span> <span class="token string">'instanceMethod'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'Do not instantiate new Singletons.  Use the Singleton.instance() method to access.'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_instance <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>number <span class="token operator">=</span> <span class="token number">0</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>_instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>_instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token string">'instanceMethod'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_instance
+  <span class="token punctuation">}</span>
+
+  <span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>number <span class="token operator">++</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">the number is </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>number<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> singleton <span class="token operator">=</span> Singleton<span class="token punctuation">.</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'another instance:'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> secondSingleton <span class="token operator">=</span> Singleton<span class="token punctuation">.</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+secondSingleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+secondSingleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'this should error lol'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> thirdSingleton <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+thirdSingleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>The benefit to using a class here is that you can be more creative with how you instance and create your Singletons.  Imagine a game where some player data is kept in a Singleton, maybe some configuration options such as a control-scheme or online username.  If you decide that your game would be better as a two-player game, you'll need to get more creative with your singleton.</p>
+<p>One creative option is to keep the singleton, but allow clients to create multiple instances that are still controlled by the Singleton.  This example does that by letting users pass in a name or id into the <code>instance</code> function.</p>
+<pre><code>//this does not protect against users just doing new Singleton()
+class Singleton {
+  constructor() {
+    this.number = 0
+  }
+
+  static instance(name) {
+    if (!this._instance) {
+      this._instance = {}
+    }
+    if (!this._instance[name]) {
+      this._instance[name] = new Singleton()
+    }
+    return this._instance[name]
+  }
+
+  iterate() {
+    this.number ++
+    console.log(`the number is ${this.number}`)
+  }
+}
+
+const singleton = Singleton.instance('first')
+singleton.iterate()
+singleton.iterate()
+singleton.iterate()
+singleton.iterate()
+
+console.log('another instance:')
+const secondSingleton = Singleton.instance('second')
+secondSingleton.iterate()
+secondSingleton.iterate()
+
+console.log('back to the first')
+const thirdSingleton = Singleton.instance('first')
+thirdSingleton.iterate()
+thirdSingleton.iterate(
+</code></pre>
+<p>We still have the problem of safety here however, so we need a way to maintain the flexibility of access but not expose the class directly to users.</p>
+<h2>RETURN OF THE IIFE</h2>
+<p>Of course, there are many ways of doing this, such as wrapping the class you intend to protect in an IIFE.  In the following example, the IIFE called 'Singleton' only returns an object with the <code>instance</code> function.  <code>Singleton.instance()</code> then returns an instance of a separate class that gets defined inside that IIFE.  Defining the class inside the IIFE means that you cannot instantiate that class outside of the IIFE, and since the IIFE is not a class itself, you can't re-instantiate the Singleton either.  The only way you can use it is by getting the protected instance with <code>Singleton.instance()</code></p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> Singleton <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> _instance <span class="token operator">=</span> <span class="token keyword">null</span>
+
+  <span class="token keyword">class</span> <span class="token class-name">ProtectedClass</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>number <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>number <span class="token operator">++</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">the number is </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>number<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">function</span> <span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>_instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      _instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ProtectedClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> _instance
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>instance<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> singleton <span class="token operator">=</span> Singleton<span class="token punctuation">.</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'another instance:'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> secondSingleton <span class="token operator">=</span> Singleton<span class="token punctuation">.</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+secondSingleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+secondSingleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> thisWillError <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ProtectedClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> thisWillAlsoError <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h2>Modules</h2>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">Native JavaScript modules</a> are another great way to create Singletons if your project is set up in a way that supports them.  The idea is identical to the IIFE, and the code is much cleaner.  In any modern JavaScript project that requires a singleton, I would recommend using this pattern in conjunction with modules.</p>
+<p>Modules allow you to use multiple files in your code, so this example is split in two.  The main feature is that we export a single function (<code>getSingletonInstance</code>) from the singleton.js module and then import it wherever we need to use it.  Just like the last IIFE example, the class that we create inside that module is protected because we are not exporting it.</p>
+<pre class="language-js"><code class="language-js"><span class="token comment">// index.js</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>getSingletonInstance<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./singleton.mjs'</span>
+
+<span class="token keyword">const</span> singleton <span class="token operator">=</span> <span class="token function">getSingletonInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+singleton<span class="token punctuation">.</span><span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-js"><code class="language-js"><span class="token comment">// singleton.js</span>
+<span class="token keyword">let</span> instance <span class="token operator">=</span> <span class="token keyword">null</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">getSingletonInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ProtectedClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> instance
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ProtectedClass</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>number <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">iterate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>number <span class="token operator">++</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">the number is </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>number<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>In the end, this has been a pretty long post to describe a pattern that is actually rather simple in concept and should be used sparingly.  However, I suspect there are cases in almost any codebase where something like this would be useful and definitely safer than just using some global variables, so don't go crazy, but definitely keep this in your back pocket.</p>
+
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; Cody Loyd</span>
+    <a href="https://github.com/codyloyd">Github</a>
+  </footer>
+</div>
+</body>
+</html>

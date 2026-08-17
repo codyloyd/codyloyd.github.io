@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Patterns: Prototype — Cody Loyd</title>
+  <meta name="description" content="Personal blog and website of Cody Loyd">
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<script>
+  function toggleTheme() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+</script>
+<div class="site">
+  <header class="site-header">
+    <div class="name-bar">
+      <a href="/" class="site-name">Cody Loyd</a>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+    </div>
+    <div class="accent-seam"></div>
+    <nav>
+      <a href="/writing/">Writing</a>
+      <a href="/fiction/">Fiction</a>
+      <a href="/games/">Games</a>
+      <a href="/music/">Music</a>
+      <a href="/about/">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+  <div class="section-header">
+    <div class="marker"></div>
+    <h1>Design Patterns: Prototype</h1>
+  </div>
+  <div class="post-header content-rail">
+    <div class="post-meta">
+      <time datetime="April 1, 2021">April 1, 2021</time>
+      
+        
+          <span class="tag">Design Patterns</span>
+        
+          <span class="tag">JavaScript</span>
+        
+      
+    </div>
+  </div>
+  <div class="post-content">
+    <p>This series of posts covers the patterns presented in the classic book &quot;<a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612">Design Patterns: Elements of Reusable Object-Oriented Software</a>.&quot; Here I break down the patterns and show examples in modern JavaScript.</p>
+<p>The Prototype Pattern is an interesting one for this discussion because it is basically built into the JavaScript language.  In fact, before Ecma International added the class keyword to the language in 2015, manipulating prototypes was the proper way to do Object-Oriented Programming.</p>
+<p>Even so, there <em>is</em> a clear difference between the prototype keyword in the JavaScript language and the Prototype pattern described by the Gang.  You can use JavaScript prototypes to facilitate the pattern they describe, but there is more to what they're suggesting than simply throwing in the <code>prototype</code> keyword when defining objects.</p>
+<p>The original pattern basically boils down to giving certain classes a <code>clone</code> function that allows you to make new objects with small changes without having to create a huge library of subclasses.  The example they give in the book is a good one.  Consider a music typesetting program where you have classes for each item you can place in your document, so you have classes for eighth notes, quarter notes, half notes etc.  These classes are extremely similar in behavior, differing only in the graphic that displays and their duration.  The standard non-pattern way of setting this up would be the following:</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">Note</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">HalfNote</span> <span class="token keyword">extends</span> <span class="token class-name">Note</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">QuarterNote</span> <span class="token keyword">extends</span> <span class="token class-name">Note</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">EighthNote</span> <span class="token keyword">extends</span> <span class="token class-name">Note</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+<p>However, doing it this way is going to get messy quickly!  There are multitudes of variations on a single 'note' that have the same behavior and only differ in small ways.  The solution given in the book then, is to give Note a 'clone' function.  The clone function allows you to get new instances of an object <em>without specifically instantiating it</em>.  In languages like C++ (the original target of the Design Patterns book) this is a very big deal.  The implications are that you can create many variants of a single class without subclassing, something like the following:</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> BaseNote <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Note</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> HalfNote <span class="token operator">=</span> BaseNote<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span>duration<span class="token punctuation">,</span> graphic<span class="token punctuation">)</span>
+<span class="token keyword">const</span> QuarterNote <span class="token operator">=</span> BaseNote<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span>duration<span class="token punctuation">,</span> graphic<span class="token punctuation">)</span>
+<span class="token keyword">const</span> EighthNote <span class="token operator">=</span> BaseNote<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span>duration<span class="token punctuation">,</span> graphic<span class="token punctuation">)</span></code></pre>
+<p>These clones are actual objects and NOT new classes, but they &quot;inherit&quot; the clone function from the BaseNote, so creating concrete instances of them is as easy as calling that clone function again.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">insertQuarterNote</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> newNote <span class="token operator">=</span> QuarterNote<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token comment">// insert note into document here.</span>
+<span class="token punctuation">}</span></code></pre>
+<p>An amazing benefit here is that you don't even have to specifically define clones for each note variant.  This could be done on the fly by the client!  There are many ways you could achieve this, but one easy way would be an object that maps durations and graphics to specific notes.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notes <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">quarter</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token literal-property property">graphic</span><span class="token operator">:</span> <span class="token string">"quarter.png"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">eighth</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token literal-property property">graphic</span><span class="token operator">:</span> <span class="token string">"eighth.png"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">half</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token literal-property property">graphic</span><span class="token operator">:</span> <span class="token string">"half.png"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">insertNote</span><span class="token punctuation">(</span><span class="token parameter">noteType</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> newNote <span class="token operator">=</span> Note<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span>notes<span class="token punctuation">[</span>noteType<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<h2>But JavaScript is Cooler than C++</h2>
+<p>Ok, salacious headline aside, JavaScript makes this pattern <em>exceptionally</em> easy to implement.  For one: technically, because of how inheritance works in JS, you're using prototypes every time you use a class in the first place.  In JavaScript, everything is an object, even classes, so instantiating objects from classes is technically just cloning an object.  Obviously, that isn't the point of this pattern, but it does mean that some of the specific uses of this pattern, as listed in the book, are not relevant in JavaScript.</p>
+<p>What I really mean when I say that JavaScript makes this pattern simple is that the methods for cloning and creating new objects are built right into the language itself, which means that unless you have some special behavior in mind, you do not need to implement and maintain the clone function in your objects,  you can clone them directly.  The magic function is <code>Object.create()</code></p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> BaseNote <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Note</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> quarterNote <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>BaseNote<span class="token punctuation">)</span>
+quarterNote<span class="token punctuation">.</span>duration <span class="token operator">=</span> <span class="token number">4</span>
+quarterNote<span class="token punctuation">.</span>graphic <span class="token operator">=</span> <span class="token string">"quarter.png"</span>
+
+<span class="token comment">// alternatively,  you can do it in one function call, though the syntax is a little messy:</span>
+<span class="token keyword">const</span> quarterNote <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>BaseNote<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">graphic</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token string">"quarter"</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>The above pattern combined with the &quot;map object&quot; from my above example can make this an extremely flexible pattern for creating small variations between many similar objects.  Here's a complete working example that gets even more condensed with the Object creation.  In this example, I'm just printing the duration and graphic to the console instead of actually inserting anything into a document.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notes <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">quarter</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token literal-property property">graphic</span><span class="token operator">:</span> <span class="token string">"quarter.png"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">eighth</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token literal-property property">graphic</span><span class="token operator">:</span> <span class="token string">"eighth.png"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">half</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token literal-property property">graphic</span><span class="token operator">:</span> <span class="token string">"half.png"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Note</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>duration <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>graphic <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>duration<span class="token punctuation">,</span> <span class="token string">"-"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>graphic<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">insertNote</span><span class="token punctuation">(</span><span class="token parameter">noteType</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Object.assign() assigns the values from one object into another,</span>
+  <span class="token comment">// Here we create a new base-note and then "assign" the values</span>
+  <span class="token comment">// that we defined in the "notes" object</span>
+  <span class="token keyword">const</span> note <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Note</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> notes<span class="token punctuation">[</span>noteType<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+  note<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">insertNote</span><span class="token punctuation">(</span><span class="token string">"quarter"</span><span class="token punctuation">)</span> <span class="token comment">// prints "4 - quarter.png"</span>
+<span class="token function">insertNote</span><span class="token punctuation">(</span><span class="token string">"eighth"</span><span class="token punctuation">)</span> <span class="token comment">// prints "2 - eighth.png"</span>
+<span class="token function">insertNote</span><span class="token punctuation">(</span><span class="token string">"half"</span><span class="token punctuation">)</span> <span class="token comment">// prints "8 - half.png"</span></code></pre>
+<p>Honestly, this pattern is very handy.  Many of the other patterns described in this book could benefit from using the prototype pattern to streamline small differences instead of creating huge libraries of subclasses.  Additionally, if the application calls for it, new variations can be created on the fly by the client or even the end-user.  You could even create variations on objects from data stored on a database (though I'd be careful about that one!)</p>
+<p>In the end, this pattern is not new or groundbreaking for JavaScript enthusiasts.  It really is just how the language itself handles Object-Oriented Programming.  Perhaps this conclusion is a little underwhelming, but I think it's good to have a reminder that we don't always need to create gargantuan spiderwebs of subclasses.  Personally, now that I've spent some time researching these fundamental design patterns, I tend to forget just how simple JavaScript makes some of these things… so much so that it might not even be worth talking about.</p>
+
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; Cody Loyd</span>
+    <a href="https://github.com/codyloyd">Github</a>
+  </footer>
+</div>
+</body>
+</html>

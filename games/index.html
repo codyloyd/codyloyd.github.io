@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>games — Cody Loyd</title>
+  <meta name="description" content="Personal blog and website of Cody Loyd">
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<script>
+  function toggleTheme() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+</script>
+<div class="site">
+  <header class="site-header">
+    <div class="name-bar">
+      <a href="/" class="site-name">Cody Loyd</a>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+    </div>
+    <div class="accent-seam"></div>
+    <nav>
+      <a href="/writing/">Writing</a>
+      <a href="/fiction/">Fiction</a>
+      <a href="/games/" aria-current="page">Games</a>
+      <a href="/music/">Music</a>
+      <a href="/about/">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="section-header">
+  <div class="marker"></div>
+  <h1>Games</h1>
+</div>
+<div class="page-content">
+<p>Yet another unproductive hobby of mine is indie game development. You can see everything I've released at <a href="https://codyloyd.itch.io/">https://codyloyd.itch.io/</a></p>
+<h2>gorlf</h2>
+<p><img src="/images/gorlf.png" alt="Gorlf"></p>
+<p>I had a blast putting this goofy little game together. Think of it as a roguelike mini-golf. <a href="https://codyloyd.itch.io/gorlf">PLAY NOW!</a></p>
+<h2>bug</h2>
+<p><img src="/images/bug.png" alt="BUG"></p>
+<p>My most ambitious project yet is &quot;BUG,&quot; a cute retro-styled platformer. Get it <a href="https://codyloyd.itch.io/bug">HERE</a>.</p>
+<h2>roosta!</h2>
+<p><img src="/images/roosta.png" alt="Roosta"></p>
+<p>This one is silly… but I had a blast hacking it together for a game jam in the summer of 2020. It's quite tricky to win, but is oddly addicting.</p>
+<p>The trick is to learn the movement patterns of the enemies. Play it <a href="https://codyloyd.itch.io/roosta">HERE</a>!</p>
+<h2>dungeon song</h2>
+<p><img src="/images/dungeon-song.png" alt="Dungeon Song"></p>
+<p>I am very proud of the concept for this game. It's a musical puzzler where you have to listen and decipher the melody that's being played to unlock the door.
+It takes a little practice to get a feel for where the notes live.. so give it a little time. Play it <a href="https://codyloyd.itch.io/dungeon-song">HERE</a></p>
+</div>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; Cody Loyd</span>
+    <a href="https://github.com/codyloyd">Github</a>
+  </footer>
+</div>
+</body>
+</html>

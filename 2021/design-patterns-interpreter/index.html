@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Patterns: Interpreter — Cody Loyd</title>
+  <meta name="description" content="Personal blog and website of Cody Loyd">
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<script>
+  function toggleTheme() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+</script>
+<div class="site">
+  <header class="site-header">
+    <div class="name-bar">
+      <a href="/" class="site-name">Cody Loyd</a>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+    </div>
+    <div class="accent-seam"></div>
+    <nav>
+      <a href="/writing/">Writing</a>
+      <a href="/fiction/">Fiction</a>
+      <a href="/games/">Games</a>
+      <a href="/music/">Music</a>
+      <a href="/about/">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+  <div class="section-header">
+    <div class="marker"></div>
+    <h1>Design Patterns: Interpreter</h1>
+  </div>
+  <div class="post-header content-rail">
+    <div class="post-meta">
+      <time datetime="March 17, 2021">March 17, 2021</time>
+      
+        
+          <span class="tag">Design Patterns</span>
+        
+          <span class="tag">JavaScript</span>
+        
+      
+    </div>
+  </div>
+  <div class="post-content">
+    <p>This series of posts covers the patterns presented in the classic book &quot;<a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612">Design Patterns: Elements of Reusable Object-Oriented Software</a>.&quot; Here I break down the patterns and show examples in modern JavaScript.</p>
+<p>The Interpreter pattern took me a while to actually understand.  When I first started digging into the pattern I had an incorrect assumption about what this pattern was actually trying to do.  The intent of this pattern, as stated in the book, is:</p>
+<blockquote>
+<p>Given a language, define a representation for it's grammar along with an interpreter that uses the representation to interpret sentences in the language</p>
+</blockquote>
+<p>The examples they give include a representation of regular expressions, something like: <code>word &amp; ( other | words)</code> or a system for evaluating boolean expressions like <code>(true and x) or (y and (not x))</code>. The big concept that I was missing here was that this pattern does <em>not</em> concern itself with parsing those expressions and turning them into code.  Rather, this pattern is about expressing those sentences in the code that you write yourself.</p>
+<p>In this post, we're going to look at the boolean example.  I'll explain it as we go, but I'm starting with the end result in an attempt to avoid all confusion. We can represent the boolean expression listed above in code like so:</p>
+<pre class="language-js"><code class="language-js"><span class="token comment">// (true and x) or (y and (not x))</span>
+<span class="token keyword">const</span> expression <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrExp</span><span class="token punctuation">(</span>
+  <span class="token keyword">new</span> <span class="token class-name">AndExp</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Constant</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token keyword">new</span> <span class="token class-name">AndExp</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">NotExp</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">// the following assignments to x and y are pseudocode,</span>
+<span class="token comment">// we'll get to the real code soon!</span>
+context<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token boolean">true</span>
+context<span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token boolean">false</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> expression<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span>
+
+<span class="token comment">// with these values of x and y, the result is TRUE!</span>
+<span class="token comment">// (true and x) or (y and (not x))</span>
+<span class="token comment">// (true and true) or (false and (not false))</span>
+<span class="token comment">// (true) or (false and true)</span>
+<span class="token comment">// true or false</span>
+<span class="token comment">// true</span></code></pre>
+<p>We'll get to exactly how these <code>OrExp</code> and <code>AndExp</code> classes function, but take a minute to make sure you see how that code relates to the boolean &quot;sentence.&quot;  TO be clear, we are <em>not</em> writing the code that turns our sentence into this expression.. we're writing the code that makes this expression work.</p>
+<p>This one is a little complicated so buckle up.</p>
+<h2>Structure</h2>
+<p>The basic building block of an interpreter is an abstract base class for the Expression.  We're creating a boolean evaluator, so in this example code, it's called <code>BooleanExp</code>.  Though we could extend it, it only needs a single function,  <code>evaluate</code> (sometimes, more officially called <code>interpret</code>)</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">BooleanExp</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token comment">// returns a bool</span>
+  <span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token parameter">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The evaluate function takes in a parameter called 'context,' which is another object.  The context object holds information about the expression that we're evaluating.  In this example, all we need to hold are the values of the variables that we're passing into the expression, x, and y.  In more complicated examples, it might contain more details about the input/output of the expression.  The context object looks like this:</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">Context</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>chars <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// returns bool</span>
+  <span class="token function">lookup</span><span class="token punctuation">(</span><span class="token parameter">varName</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>chars<span class="token punctuation">[</span>varName<span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">assign</span><span class="token punctuation">(</span><span class="token parameter">variableExp<span class="token punctuation">,</span> bool</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>chars<span class="token punctuation">[</span>variableExp<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> bool
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>In this class, <code>this.chars</code> is an object that holds all the variables we need for our evaluation.  The lookup function simply finds the value of a given variable, and the assign function sets that value.  You'll see that one of the parameters of the assign function is a <code>variableExp</code>, that is a subclass of our base <code>BooleanExp</code>, which we will discuss shortly.</p>
+<h2>Terminal Expressions</h2>
+<p>Probably the most important concept in this pattern is its recursive tree-like structure. When the evaluate function is run, subclasses of BooleanExp will call evaluate() on their children.  Those children are, of course, also subclasses of BooleanExp, so they too will call evaluate() on their children, which may or may also be more subclasses of BooleanExp.  The only way out of this recursive loop is to have some of our expressions that return a value (true or false in this case) without continuing the run down the tree.</p>
+<p>An expression that returns a value, ending that branch of the tree, is a terminal expression.  Expressions that continue branching and calling the evaluate function are called nonterminal expressions.  In our example, we have two terminal expressions, <code>Constant</code> and <code>VariableExp</code>.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">Constant</span> <span class="token keyword">extends</span> <span class="token class-name">BooleanExp</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_value <span class="token operator">=</span> value
+  <span class="token punctuation">}</span>
+
+  <span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token parameter">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_value
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// example usage</span>
+<span class="token keyword">const</span> myTrueConstant <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Constant</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> myTrueConstant<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token comment">// result is `true`</span></code></pre>
+<p>Constant is simply a representation of the values <code>true</code> or <code>false</code>.  All they have to do is return that value when they are evaluated.  Notice that the Constant's evaluate function does not use the context that is passed into it.  This is fine, not every expression will need it, but since we don't know how an expression will end up being evaluated we need to pass it in to <em>every</em> evaluate function.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">VariableExp</span> <span class="token keyword">extends</span> <span class="token class-name">BooleanExp</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_name <span class="token operator">=</span> name
+  <span class="token punctuation">}</span>
+
+  <span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token parameter">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> context<span class="token punctuation">.</span><span class="token function">lookup</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_name<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_name
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The only expression that <em>does</em> use the context is our other terminal expression, VariableExp.  The variable expression simply represents one of our variables.  The actual value of these variables are stored in the Context object, so when the variable is evaluated it uses the context to find it's value.</p>
+<p>The example that I started this article with had a bit of pseudocode related to assigning those variables. Now that we have defined the Context object and variable expressions we can reveal the real code.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Context</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> x <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VariableExp</span><span class="token punctuation">(</span><span class="token string">"X"</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> y <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VariableExp</span><span class="token punctuation">(</span><span class="token string">"Y"</span><span class="token punctuation">)</span>
+
+<span class="token comment">// (true and x) or (y and (not x))</span>
+<span class="token keyword">const</span> expression <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrExp</span><span class="token punctuation">(</span>
+  <span class="token keyword">new</span> <span class="token class-name">AndExp</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Constant</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token keyword">new</span> <span class="token class-name">AndExp</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">NotExp</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+
+context<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+context<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> result <span class="token operator">=</span> expression<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span></code></pre>
+<h2>Nonterminal Expressions</h2>
+<p>As i mentioned earlier, when nonterminal expressions are evaluated, they evaluate their children.  In our Boolean example we have three nonterminal expressions: and, or, and not.</p>
+<p>These expressions all work almost identically so we really only need to dig into one of them, the <code>AndExp</code></p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">AndExp</span> <span class="token keyword">extends</span> <span class="token class-name">BooleanExp</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">booleanExp1<span class="token punctuation">,</span> booleanExp2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_operand1 <span class="token operator">=</span> booleanExp1
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_operand2 <span class="token operator">=</span> booleanExp2
+  <span class="token punctuation">}</span>
+
+  <span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token parameter">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_operand1<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_operand2<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>As you can see, it takes in two parameters, both of them other Boolean-Expressions that we're calling operands.  When an And-Expression is evaluated it evaluates both of those operands and returns the value of  <code>operand1 &amp;&amp; operand2</code>.</p>
+<p>If either of those operands are terminal expressions (i.e. constants or variables), then the evaluate function will return those values, but if they are nonterminal expressions then the tree continues to grow until a terminal value is reached.  The following is a simple example using only AndExpressions and Constants.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Context</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> expression1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AndExp</span><span class="token punctuation">(</span>
+  <span class="token keyword">new</span> <span class="token class-name">Constant</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token keyword">new</span> <span class="token class-name">Constant</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">const</span> result1 <span class="token operator">=</span> expression1<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token comment">// true &amp;&amp; true === true</span>
+
+<span class="token keyword">const</span> expression2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AndExp</span><span class="token punctuation">(</span>
+  <span class="token keyword">new</span> <span class="token class-name">Constant</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token keyword">new</span> <span class="token class-name">AndExp</span><span class="token punctuation">(</span>
+    <span class="token keyword">new</span> <span class="token class-name">Constant</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">new</span> <span class="token class-name">Constant</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">const</span> result2 <span class="token operator">=</span> expression2<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span>
+<span class="token comment">// true &amp;&amp; (true &amp;&amp; false) === true &amp;&amp; false === false</span></code></pre>
+<p>Expression2 is the interesting one here because it shows how these expressions can be nested inside each other.  Since any nonterminal expression is just calling evaluate on it's children, those children can be more nonterminal expressions.  There is no limit to how deeply nested these things can get, so long as eventually the branches of the tree end up with a terminal expression.</p>
+<p>With this knowledge, the full example should make sense now.  The other nonterminal expressions work just like AndExp, and the code for them can be seen on this <a href="https://github.com/codyloyd/interpreter_pattern_example">github repo.</a></p>
+<h2>Conclusions</h2>
+<p>Honestly, I feel like this is only half of a pattern in its current form.  It seems like it is minimally useful without some parser that actually takes the string and turns it into this code… but then again, parsers are a completely different rabbit hole.  Combined with a parser, I do feel like this could be a useful pattern to know for creating little mini-languages in your codebase if that makes sense.  Imagine being able to parse the following silly markup into actual HTML!</p>
+<pre class="language-js"><code class="language-js"><span class="token comment">//div</span>
+<span class="token comment">//  heading -> "Hello World"</span>
+<span class="token comment">//  article</span>
+<span class="token comment">//    columns</span>
+<span class="token comment">//      paragraph -> "Text"</span>
+<span class="token comment">//      sidebar</span>
+<span class="token comment">//        list</span>
+<span class="token comment">//          ....you get the point</span>
+
+<span class="token keyword">const</span> myFrontendComponent <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DivComponent</span><span class="token punctuation">(</span>
+  <span class="token keyword">new</span> <span class="token class-name">HeadingComponent</span><span class="token punctuation">(</span><span class="token string">"Hello World"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token keyword">new</span> <span class="token class-name">ArticleComponent</span><span class="token punctuation">(</span>
+    <span class="token keyword">new</span> <span class="token class-name">ColumnsComponent</span><span class="token punctuation">(</span>
+      <span class="token keyword">new</span> <span class="token class-name">ParagraphComponent</span><span class="token punctuation">(</span><span class="token string">"Text"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token keyword">new</span> <span class="token class-name">SidebarComponent</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ListComponent</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">.</span>you <span class="token keyword">get</span> the point<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token punctuation">)</span></code></pre>
+
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; Cody Loyd</span>
+    <a href="https://github.com/codyloyd">Github</a>
+  </footer>
+</div>
+</body>
+</html>

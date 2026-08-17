@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full-Screen App-Like Layouts — Cody Loyd</title>
+  <meta name="description" content="Personal blog and website of Cody Loyd">
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<script>
+  function toggleTheme() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+</script>
+<div class="site">
+  <header class="site-header">
+    <div class="name-bar">
+      <a href="/" class="site-name">Cody Loyd</a>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+    </div>
+    <div class="accent-seam"></div>
+    <nav>
+      <a href="/writing/">Writing</a>
+      <a href="/fiction/">Fiction</a>
+      <a href="/games/">Games</a>
+      <a href="/music/">Music</a>
+      <a href="/about/">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+  <div class="section-header">
+    <div class="marker"></div>
+    <h1>Full-Screen App-Like Layouts</h1>
+  </div>
+  <div class="post-header content-rail">
+    <div class="post-meta">
+      <time datetime="February 21, 2021">February 21, 2021</time>
+      
+        
+          <span class="tag">CSS</span>
+        
+          <span class="tag">responsive</span>
+        
+      
+    </div>
+  </div>
+  <div class="post-content">
+    <p>Web apps that behave like full-screen native apps have become commonplace.  I've come across many designs for web-based projects that have a layout with a static header, a static footer, and some scrolling dynamic content in between. In the past, this kind of full-screen layout was difficult to pull off, but CSS has evolved to the point where that is no longer the case.</p>
+<h2>Viewport Units</h2>
+<p>First: a warning.  Viewport units (<code>vh/vw</code>) are one of the more interesting newer developments in CSS. Check <a href="https://css-tricks.com/fun-viewport-units/">here</a> if you're unfamiliar.  Viewport units seem like the perfect tool for creating a full-height layout, but they come with a pretty big pitfall: they can be buggy on smartphones. This is likely to improve a bit as phone technology improves, but the way that phone browsers (specifically iOS browsers) interpret the 'viewport' is not the way most people expect or desire.</p>
+<p>The most significant issue is the toolbar at the bottom.</p>
+<p>It appears and disappears as you scroll around and tap on the webpage/browser, and on iOS is <em>not</em> taken into account when viewport units are calculated.</p>
+<p><img src="/images/safari-1.png" alt="Safari toolbar visible"></p>
+<p><img src="/images/safari.png" alt="Safari toolbar hidden"></p>
+<p>Consider the following:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>full-screen<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>header<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>content<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, voluptatibus odio? Obcaecati neque nesciunt officiis nulla iusto veritatis, quas mollitia provident, ullam optio possimus ducimus perspiciatis magnam ab et excepturi.
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>footer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<pre class="language-css"><code class="language-css"><span class="token selector">*</span> <span class="token punctuation">{</span><span class="token property">box-sizing</span><span class="token punctuation">:</span> border-box<span class="token punctuation">;</span><span class="token punctuation">}</span>
+<span class="token selector">body</span> <span class="token punctuation">{</span><span class="token property">margin</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span><span class="token punctuation">}</span>
+
+<span class="token selector">.full-screen</span> <span class="token punctuation">{</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> pink<span class="token punctuation">;</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> 32px<span class="token punctuation">;</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 100vh<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.content</span> <span class="token punctuation">{</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> 16px<span class="token punctuation">;</span>
+  // header and footer are 50px each
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token function">calc</span><span class="token punctuation">(</span>100% - 100px<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.header</span> <span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 50px<span class="token punctuation">;</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.footer</span> <span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 50px<span class="token punctuation">;</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p><img src="/images/footer.png" alt="Basic full-screen layout"></p>
+<p>In this example, which looks and works fine on most desktop browsers, (and android browsers too) the footer would likely spend a lot of time covered up by the iOS safari toolbar, which is no good if you are intending to put important information or buttons down there.</p>
+<h3>Solutions</h3>
+<p>Unfortunately the solution here is less elegant looking than the 100vh, but it does have the advantage of <em>working as intended</em>. The solution is to use <code>position: fixed</code>. The screenshot from my browser would look the same here, so I'll just paste in the code that's been changed. We're not done with this example yet either, so I'll wait to post the whole code until we're done.</p>
+<pre class="language-css"><code class="language-css"><span class="token selector">.full-screen</span> <span class="token punctuation">{</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> pink<span class="token punctuation">;</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> 32px<span class="token punctuation">;</span>
+  <span class="token property">position</span><span class="token punctuation">:</span> fixed<span class="token punctuation">;</span>
+  <span class="token property">top</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">bottom</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">left</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">right</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p><code>position: fixed</code> with <code>top</code>, <code>left</code>, <code>right</code>, and <code>bottom</code> set to <code>0</code> is not <em>technically</em> the same effect as <code>height: 100vh</code>, but if the desire is to create a full-screen app-like experience then it's closer to what you <em>actually</em> want.</p>
+<h2>Sticking the Footer to the Bottom</h2>
+<p>OK listen. Calc is awesome, and I'm not about to tell you to never use it…. but the example I've just shown you has another problem here:</p>
+<pre class="language-css"><code class="language-css"><span class="token selector">.content</span> <span class="token punctuation">{</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> 16px<span class="token punctuation">;</span>
+  // header and footer are 50px each
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token function">calc</span><span class="token punctuation">(</span>100% - 100px<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This section is the middle of our full-screen view. The part with all the text. We set the height like this to push the footer to the bottom of the screen. Without it, our app would look like this:</p>
+<p><img src="/images/viewportheight.png" alt="Viewport height with calc"></p>
+<p>However, doing this calculation requires that our header and footer <em>always</em> add up to exactly 100px, which is kind of hard to guarantee. If we're creating a multi-use layout component that lets us stick in different header/footer combinations or if we are always using the same header but sticking in different content (titles, subtitles, buttons, whatever), it can be hard to guarantee that nothing is ever going to overflow and expand the header. Sometimes the design changes!</p>
+<p>One solution to avoid is using <code>position: fixed</code> or <code>position: absolute</code> to force the footer to the bottom.  Doing so <em>will</em> stick the footer where you want it, but it will introduce a new problem: the footer now covers up the bottom of our content section.  This can be combated with some extra padding on the bottom of <code>.content</code>, but then we again run into the problem of having to hard-code that height.</p>
+<p>A better solution here is to use flexbox (with <code>flex-direction: column</code>) to make sure our design is…. <em>flexible</em>.  Combined with <code>overflow: auto</code> on <code>.content</code> we now have exactly what we want, and it behaves correctly on all devices.</p>
+<p><img src="/images/flexible.gif" alt="Flexible layout with flexbox"></p>
+<p>Check out the full code for this finished layout <a href="https://codepen.io/codyloyd/pen/qBqXbLN?editors=1100">here on CodePen</a>.</p>
+<h3>What about Grid!?</h3>
+<p>You can accomplish the same layout with less code using Grid.  There are a few reasons why you might want to stick with the flex version, but grid is here to stay.  The technique is similar, but in addition to the <code>position: fixed</code> you need to add a <code>height: 100%</code> to make this work on Safari (works on other browsers without it).</p>
+<p>The secret sauce for getting a static header and footer is using <code>max-content</code>  to define your grid-rows.  Doing this avoids having to hard-code the height of our header and footer.</p>
+<pre class="language-css"><code class="language-css"><span class="token selector">.container</span> <span class="token punctuation">{</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> grid<span class="token punctuation">;</span>
+  <span class="token property">grid-template-rows</span><span class="token punctuation">:</span> max-content 1fr max-content<span class="token punctuation">;</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span>
+  <span class="token property">position</span><span class="token punctuation">:</span> fixed<span class="token punctuation">;</span>
+  <span class="token property">top</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">bottom</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">left</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">right</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p><a href="https://codepen.io/codyloyd/pen/dyOVMGN?editors=0100">Check the full example in this codepen</a>.</p>
+
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; Cody Loyd</span>
+    <a href="https://github.com/codyloyd">Github</a>
+  </footer>
+</div>
+</body>
+</html>

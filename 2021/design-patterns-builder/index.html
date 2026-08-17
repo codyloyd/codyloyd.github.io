@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Patterns: Builder — Cody Loyd</title>
+  <meta name="description" content="Personal blog and website of Cody Loyd">
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<script>
+  function toggleTheme() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+</script>
+<div class="site">
+  <header class="site-header">
+    <div class="name-bar">
+      <a href="/" class="site-name">Cody Loyd</a>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+    </div>
+    <div class="accent-seam"></div>
+    <nav>
+      <a href="/writing/">Writing</a>
+      <a href="/fiction/">Fiction</a>
+      <a href="/games/">Games</a>
+      <a href="/music/">Music</a>
+      <a href="/about/">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+  <div class="section-header">
+    <div class="marker"></div>
+    <h1>Design Patterns: Builder</h1>
+  </div>
+  <div class="post-header content-rail">
+    <div class="post-meta">
+      <time datetime="March 4, 2021">March 4, 2021</time>
+      
+        
+          <span class="tag">Design Patterns</span>
+        
+          <span class="tag">JavaScript</span>
+        
+      
+    </div>
+  </div>
+  <div class="post-content">
+    <p>This series of posts covers the patterns presented in the classic book &quot;<a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612">Design Patterns: Elements of Reusable Object-Oriented Software</a>.&quot; Here I break down the patterns and show examples in modern JavaScript.</p>
+<p>The builder pattern is very similar to the factory patterns that I discussed <a href="/2021/factories/">in a previous post</a>.  In the factory patterns, you either create a class or a method to create instances of your objects for you.  A builder is also a class that creates objects for you, but the way it goes about it is subtly different.</p>
+<p>The biggest difference between factories and builders is that factories always instantly return the object you request. In contrast, the builder maintains a reference to that object and can supply it to the client upon request.  The implication is that you can further hide your implementation details inside a builder to build radically different types of objects using the same interface.</p>
+<p>You can see the difference between a factory and a builder with a simple example. The following code includes two functions that essentially do the same thing.  These functions take some parameters and then use them to create some complex object.  In the factory example, each function returns the piece built in each step, and these pieces then need to be composed into the final product.  In contrast, the builder example stores both the intermediate objects and the final product internally, only returning it when requested using the <code>getProduct()</code> function.</p>
+<pre class="language-js"><code class="language-js"><span class="token comment">// factory</span>
+<span class="token function">functionThatUsesFactories</span><span class="token punctuation">(</span><span class="token parameter">param1<span class="token punctuation">,</span> param2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> aThing <span class="token operator">=</span> factory<span class="token punctuation">.</span><span class="token function">createAThing</span><span class="token punctuation">(</span>param1<span class="token punctuation">)</span>
+  <span class="token keyword">const</span> anotherThing <span class="token operator">=</span> factory<span class="token punctuation">.</span><span class="token function">createAnotherThing</span><span class="token punctuation">(</span>param2<span class="token punctuation">)</span>
+  <span class="token keyword">const</span> finalProduct <span class="token operator">=</span> factory<span class="token punctuation">.</span><span class="token function">createFinalProduct</span><span class="token punctuation">(</span>aThing<span class="token punctuation">,</span> anotherThing<span class="token punctuation">)</span>
+
+  <span class="token keyword">return</span> finalProduct
+<span class="token punctuation">}</span>
+
+<span class="token comment">// builder</span>
+<span class="token function">functionThatUsesABuilder</span><span class="token punctuation">(</span><span class="token parameter">param1<span class="token punctuation">,</span> param2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  builder<span class="token punctuation">.</span><span class="token function">buildAThing</span><span class="token punctuation">(</span>param2<span class="token punctuation">)</span>
+  builder<span class="token punctuation">.</span><span class="token function">buildAnotherThing</span><span class="token punctuation">(</span>param2<span class="token punctuation">)</span>
+  builder<span class="token punctuation">.</span><span class="token function">buildFinalProduct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">return</span> builder<span class="token punctuation">.</span><span class="token function">getProduct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Obviously, this example is a little contrived; we probably don't need the intermediate steps in something as simple as this, so let's look at some real examples.</p>
+<p>The Builder example given in the Gang of Four book is a reader of RTF documents.  This reader application can use subclasses of a Builder to transform RTF into any other format such as plain ASCII, LaTeX, or a graphical editor widget.  These builders would have the same interface (in this case, that might be functions such as <code>convertLine()</code> and <code>convertCharacter()</code>), but what they do behind the scenes can vary wildly.</p>
+<h2>Code Example</h2>
+<p>All of this code can be found <a href="https://github.com/codyloyd/CreationalPatternExamples">on GitHub</a>.</p>
+<p>I have implemented another example given in the book, a straightforward Maze game.  There's no UI to <em>play</em> the game, but there are functions that allow the player to move between the various rooms and interact with walls and doors inside the maze.  The full code can be run and will print out the results to the browser's console.</p>
+<pre class="language-js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'--------------default game--------------'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> game <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MazeGame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> maze <span class="token operator">=</span> game<span class="token punctuation">.</span><span class="token function">createMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+game<span class="token punctuation">.</span><span class="token function">getCurrentRoom</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// You are in room number 1</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//  --- trying to go north -- You bump into a wall</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// --- trying to go east -- ouch, you bumped your nose on the door</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> <span class="token string">'open'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// --- trying to open south -- you can't open that</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> <span class="token string">'open'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// --- trying to open east -- you open the door</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// --- trying to go east -- You are in room number 2</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// --- trying to go west -- You are in room number 1</span></code></pre>
+<h2>Creational base</h2>
+<p>Most of the setup for the actual builder examples occurs inside <code>creational_base.js</code>. Classes are created for the <code>Maze</code> and <code>MazeGame</code> itself and the various elements you can encounter in the maze, <code>Room</code>s, <code>Wall</code>s, and <code>Door</code>s.</p>
+<p>The interesting bit here, and the part that actually changes in the builder is MazeGame.createMaze(). In this example, it's fairly naive. It simply grabs and instantiates the room, wall and door classes that we created and builds a simple 2-room maze:</p>
+<pre class="language-js"><code class="language-js"><span class="token function">createMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> aMaze <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Maze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> r1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Room</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> r2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Room</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> door <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Door</span><span class="token punctuation">(</span>r1<span class="token punctuation">,</span> r2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  aMaze<span class="token punctuation">.</span><span class="token function">addRoom</span><span class="token punctuation">(</span>r1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  aMaze<span class="token punctuation">.</span><span class="token function">addRoom</span><span class="token punctuation">(</span>r2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> door<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">,</span> door<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">this</span><span class="token punctuation">.</span>currentRoom <span class="token operator">=</span> r1<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> aMaze<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This is obviously quite inflexible because it hard-codes the classes right in the code. Adding new types of rooms, walls, or doors will get messy quickly… so, just like we did with the factory examples, we'll outsource the creation of a maze to a Builder class.</p>
+<h2>Builder example</h2>
+<p>One feature of a builder is that it always uses an abstract base class with empty functions.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">MazeBuilder</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token function">buildMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token function">buildRoom</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token function">buildDoor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token function">getMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Doing this allows the subclasses the flexibility to redefine only the methods they actually need to do the building.  We could, for example,  have an empty abstract function called <code>buildTrap</code> that inserts traps into our maze, but since not every kind of maze would need traps a builder subclass could simply not define that function.</p>
+<p>Our subclass, the one that actually gets used by our maze game, creates and stores a reference to the maze and then appends rooms to that maze and creates doors between the rooms.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">StandardMazeBuilder</span> <span class="token keyword">extends</span> <span class="token class-name">MazeBuilder</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_currentMaze <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">buildMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_currentMaze <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Maze</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">buildRoom</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>_currentMaze<span class="token punctuation">.</span><span class="token function">getRoom</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> room <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Room</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+
+      room<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      room<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      room<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      room<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+      <span class="token keyword">this</span><span class="token punctuation">.</span>_currentMaze<span class="token punctuation">.</span><span class="token function">addRoom</span><span class="token punctuation">(</span>room<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">buildDoor</span><span class="token punctuation">(</span><span class="token parameter">id1<span class="token punctuation">,</span> dir1<span class="token punctuation">,</span> id2<span class="token punctuation">,</span> dir2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> r1 <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_currentMaze<span class="token punctuation">.</span><span class="token function">getRoom</span><span class="token punctuation">(</span>id1<span class="token punctuation">)</span>
+    <span class="token keyword">const</span> r2 <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_currentMaze<span class="token punctuation">.</span><span class="token function">getRoom</span><span class="token punctuation">(</span>id2<span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> door <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Door</span><span class="token punctuation">(</span>r1<span class="token punctuation">,</span> r2<span class="token punctuation">)</span>
+    r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span>dir1<span class="token punctuation">,</span> door<span class="token punctuation">)</span>
+    r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span>dir2<span class="token punctuation">,</span> door<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">getMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_currentMaze
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The benefit to using this pattern can be seen in the <code>createMaze()</code> function.  Contrast the following to the original version found in <code>creational_base.js</code>.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">BuilderMazeGame</span> <span class="token keyword">extends</span> <span class="token class-name">MazeGame</span> <span class="token punctuation">{</span>
+  <span class="token function">createMaze</span><span class="token punctuation">(</span><span class="token parameter">builder</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    builder<span class="token punctuation">.</span><span class="token function">buildMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    builder<span class="token punctuation">.</span><span class="token function">buildRoom</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    builder<span class="token punctuation">.</span><span class="token function">buildRoom</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+    builder<span class="token punctuation">.</span><span class="token function">buildDoor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'east'</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'west'</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> maze <span class="token operator">=</span> builder<span class="token punctuation">.</span><span class="token function">getMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>currentRoom <span class="token operator">=</span> maze<span class="token punctuation">.</span><span class="token function">getRoom</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> maze
+  <span class="token punctuation">}</span></code></pre>
+<p>We don't have to maintain references to the individual rooms and manually stick them in the maze and we don't have to manually create each wall in the rooms because these details are handled for us by the builder.  The builder keeps a reference to the maze object, so we can connect rooms with a door by using room ids and directions.</p>
+<p>This API could easily be extended to create procedurally generated mazes of any size, and of course, it would be easy to add variants of each kind of item found in the maze.</p>
+<p>One exciting benefit of using this pattern is that you can create objects with <em>wildly</em> different behaviors.  Our rooms and walls are currently just objects stored inside a maze object, but there is no reason that <code>getMaze</code> couldn't return some nodes to append to the DOM.  With a factory, you'd have to do that in a separate step and feed the maze object inside a <code>createDOMNodes</code> function.  Here, we could subclass our Builder and add it in.  Want to try something more exotic? Create another Builder subclass that builds a 3d maze with https://threejs.org/… our maze creation program becomes a LOT more flexible when outsourcing the actual object creation to a builder object.</p>
+
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; Cody Loyd</span>
+    <a href="https://github.com/codyloyd">Github</a>
+  </footer>
+</div>
+</body>
+</html>

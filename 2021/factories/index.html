@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Patterns: Factories — Cody Loyd</title>
+  <meta name="description" content="Personal blog and website of Cody Loyd">
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<script>
+  function toggleTheme() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+</script>
+<div class="site">
+  <header class="site-header">
+    <div class="name-bar">
+      <a href="/" class="site-name">Cody Loyd</a>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+    </div>
+    <div class="accent-seam"></div>
+    <nav>
+      <a href="/writing/">Writing</a>
+      <a href="/fiction/">Fiction</a>
+      <a href="/games/">Games</a>
+      <a href="/music/">Music</a>
+      <a href="/about/">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+  <div class="section-header">
+    <div class="marker"></div>
+    <h1>Design Patterns: Factories</h1>
+  </div>
+  <div class="post-header content-rail">
+    <div class="post-meta">
+      <time datetime="February 18, 2021">February 18, 2021</time>
+      
+        
+          <span class="tag">Design Patterns</span>
+        
+          <span class="tag">JavaScript</span>
+        
+      
+    </div>
+  </div>
+  <div class="post-content">
+    <p>This series of posts covers the patterns presented in the classic book &quot;<a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612">Design Patterns: Elements of Reusable Object-Oriented Software</a>.&quot;  Here I break down the patterns and show examples in modern JavaScript.</p>
+<p>The Gang of Four Design patterns book covers two types of factory in the &quot;Creational Patterns&quot; section, the Abstract Factory and the Factory Method. These patterns are very similar, so learning them simultaneously is logical and can help make the distinction between them clearer.</p>
+<p>Basically, both factory patterns say that when you need a variant of some object (document types, components, or rooms in a maze), you should move the instantiation of those things to a method so that you have control over which variation is created, either by subclassing whatever object holds those methods, or by passing parameters into those methods to select specific variants. The big difference between these two patterns is which object holds those creation methods.</p>
+<p>In an <strong>ABSTRACT FACTORY</strong> the creation methods are moved into a special factory class which is then passed into and used by the program to create the objects it needs. Obtaining variants then requires you to subclass this factory before passing it into the object that uses it.</p>
+<p><strong>FACTORY METHODS</strong> exist in the main class that is instantiating the various objects that it needs. In this case, you would subclass that main class to obtain the variants.</p>
+<h2>Examples</h2>
+<p>The <strong>Abstract Factory</strong> example listed in the book is the creation of UI widgets with a varying look-and-feel. In their example, for instance, you would create an Abstract base factory class that defines an interface for  <code>createWindow</code>  or  <code>createScrollBar</code>.  Then you would subclass the base factory to actually define and build the individual components. Then, when building your app, you pass in a subclassed factory so that the app has whichever variant you choose.</p>
+<p>The <strong>Factory Method</strong> example is an application that can create various types of documents. In this example, the base class is the application that may or may not have a default document type implemented with an interface like <code>newDocument</code> and <code>openDocument</code>. To handle different types of documents, there are 2 options: subclassing the application class, or passing &quot;option&quot; parameters into the document creation functions.</p>
+<h2>Code</h2>
+<p>All of this code can be found <a href="https://github.com/codyloyd/FactoryPatternExamples">on github</a>.</p>
+<p>I've implemented another example from the book in this repo. This example is a particularly lame text-based &quot;maze&quot; game. I didn't create any UI or any good way to interact with the game, but there are functions built in for moving around the maze. You can see how the game is &quot;played&quot; at the bottom of each <code>.js</code> file:</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> game <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MazeGame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> maze <span class="token operator">=</span> game<span class="token punctuation">.</span><span class="token function">createMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+game<span class="token punctuation">.</span><span class="token function">getCurrentRoom</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> <span class="token string">'open'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> <span class="token string">'open'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+game<span class="token punctuation">.</span><span class="token function">tryDirection</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3>Creational Base</h3>
+<p>This is where most of the setup for the actual factory examples occurs. Classes are created for the <code>Maze</code> and <code>MazeGame</code> itself and the various elements you can encounter in the maze, <code>Room</code>s, <code>Wall</code>s, and <code>Door</code>s.</p>
+<p>The interesting bit here, and the part that actually changes in the factory examples is <code>MazeGame.createMaze()</code>. In this example it's fairly naive. It simply grabs and instantiates the room, wall and door classes that we created and builds a simple 2-room maze:</p>
+<pre class="language-js"><code class="language-js"><span class="token function">createMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> aMaze <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Maze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> r1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Room</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> r2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Room</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> door <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Door</span><span class="token punctuation">(</span>r1<span class="token punctuation">,</span> r2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  aMaze<span class="token punctuation">.</span><span class="token function">addRoom</span><span class="token punctuation">(</span>r1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  aMaze<span class="token punctuation">.</span><span class="token function">addRoom</span><span class="token punctuation">(</span>r2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> door<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">,</span> door<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">this</span><span class="token punctuation">.</span>currentRoom <span class="token operator">=</span> r1<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> aMaze<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This is obviously quite inflexible because it hard-codes the classes right in the code. Adding new types of rooms, walls or doors will get messy <em>quick</em>… so using one of the factory patterns here will involve outsourcing the creation of those maze elements to methods.</p>
+<h3>Abstract Factory</h3>
+<p>For the abstract factory, we create a new class called <code>MazeFactory</code> that creates these things for us, and then pass an instance of that class into <code>mazeGame.createMaze()</code>. Creating variations of the elements inside the maze then is as easy as subclassing that MazeFactory and overwriting which ever methods you need to vary.</p>
+<blockquote>
+<p>note: in the git repo, the <code>abstract_factory</code> and <code>factory_method</code> files also import <code>creational_base.js</code>, so those files only redefine and subclass the elements that need to change to use the pattern.</p>
+</blockquote>
+<pre class="language-js"><code class="language-js"><span class="token comment">// the factories!</span>
+<span class="token keyword">class</span> <span class="token class-name">MazeFactory</span> <span class="token punctuation">{</span>
+  <span class="token function">makeMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Maze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">makeRoom</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Room</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">makeDoor</span><span class="token punctuation">(</span><span class="token parameter">roomOne<span class="token punctuation">,</span> roomTwo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Door</span><span class="token punctuation">(</span>roomOne<span class="token punctuation">,</span> roomTwo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">FancyMazeFactory</span> <span class="token keyword">extends</span> <span class="token class-name">MazeFactory</span> <span class="token punctuation">{</span>
+  <span class="token function">makeRoom</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">FancyRoom</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">FancyWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// using the factory in createMaze()</span>
+<span class="token keyword">class</span> <span class="token class-name">FactoryMazeGame</span> <span class="token keyword">extends</span> <span class="token class-name">MazeGame</span> <span class="token punctuation">{</span>
+  <span class="token function">createMaze</span><span class="token punctuation">(</span><span class="token parameter">mazeFactory</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> aMaze <span class="token operator">=</span> mazeFactory<span class="token punctuation">.</span><span class="token function">makeMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> r1 <span class="token operator">=</span> mazeFactory<span class="token punctuation">.</span><span class="token function">makeRoom</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> r2 <span class="token operator">=</span> mazeFactory<span class="token punctuation">.</span><span class="token function">makeRoom</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> door <span class="token operator">=</span> mazeFactory<span class="token punctuation">.</span><span class="token function">makeDoor</span><span class="token punctuation">(</span>r1<span class="token punctuation">,</span> r2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    aMaze<span class="token punctuation">.</span><span class="token function">addRoom</span><span class="token punctuation">(</span>r1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    aMaze<span class="token punctuation">.</span><span class="token function">addRoom</span><span class="token punctuation">(</span>r2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">,</span> mazeFactory<span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> door<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> mazeFactory<span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">,</span> mazeFactory<span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">,</span> mazeFactory<span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> mazeFactory<span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> mazeFactory<span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">,</span> door<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">this</span><span class="token punctuation">.</span>currentRoom <span class="token operator">=</span> r1<span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> aMaze<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3>Factory Method</h3>
+<p>The factory method example does the same thing as the Abstract Factory, except that instead of creating a completely new Factory class, it just sticks the creation methods inside the main mazeGame class. To use the variants then, all you need to do is subclass MazeGame and redefine the appropriate creation methods.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">FactoryMazeGame</span> <span class="token keyword">extends</span> <span class="token class-name">MazeGame</span> <span class="token punctuation">{</span>
+  <span class="token function">makeMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Maze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Wall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">makeRoom</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Room</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">makeDoor</span><span class="token punctuation">(</span><span class="token parameter">roomOne<span class="token punctuation">,</span> roomTwo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Door</span><span class="token punctuation">(</span>roomOne<span class="token punctuation">,</span> roomTwo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">createMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> aMaze <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeMaze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> r1 <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeRoom</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> r2 <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeRoom</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> door <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeDoor</span><span class="token punctuation">(</span>r1<span class="token punctuation">,</span> r2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    aMaze<span class="token punctuation">.</span><span class="token function">addRoom</span><span class="token punctuation">(</span>r1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    aMaze<span class="token punctuation">.</span><span class="token function">addRoom</span><span class="token punctuation">(</span>r2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> door<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r1<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'north'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'east'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'south'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    r2<span class="token punctuation">.</span><span class="token function">setSide</span><span class="token punctuation">(</span><span class="token string">'west'</span><span class="token punctuation">,</span> door<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">this</span><span class="token punctuation">.</span>currentRoom <span class="token operator">=</span> r1<span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> aMaze<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">DangerousGame</span> <span class="token keyword">extends</span> <span class="token class-name">FactoryMazeGame</span> <span class="token punctuation">{</span>
+  <span class="token function">makeRoom</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">DangerousRoom</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">makeWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">DangerousWall</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h2>Conclusion</h2>
+<p>The basic idea here is simple: if you need variants of something in your code: move the creation of that thing to a factory function… doing that will allow you the flexibility you need to select variants on the fly. Which of these patterns you use will depend on the circumstance and setup of the application you're working with. The <strong>Factory Method</strong> is quite a bit simpler to set up, and you can get away without subclassing the application class if you use a function parameter to select your variant (<code>this.makeRoom(roomId, variant)</code>).</p>
+<p>The <strong>Abstract Factory</strong> might be more flexible and easier to extend without cluttering up your main application class.</p>
+<p>In either case, the basic idea is the same and is quite powerful! Personally, I'm interested in exploring ways to use this in front-end web dev, where I am often tasked with creating variations (in style or behavior) on the same basic component, for example, a pop-up dialog. I want to explore developing a pattern that makes creating variants of components or elements using factories relatively painless and easier to maintain in the long run. So: thanks, Gang of Four.</p>
+
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; Cody Loyd</span>
+    <a href="https://github.com/codyloyd">Github</a>
+  </footer>
+</div>
+</body>
+</html>
