@@ -14,6 +14,12 @@ I enjoy writing and performing music. In a past life, I was a high-school band t
 
 ![Cody with saxophone](/images/mewithsaxcropped.jpg)
 
+## melos 
+
+![The Melos Project](/images/melos.png)
+
+I built [The Melos Project](https://themelosproject.com/) — a free, open music education suite. It has a structured theory curriculum and a bunch of practice tools for drilling note names, chords, intervals, scales, and key signatures. And it's FREE!
+
 ## the decreasing
 
 At this point, this is my main musical creative project, along with my brother-in-law Micah. We've recorded several songs together over the last few years and have released a couple of albums. You can find links to all of the streaming platforms on our website. [https://thedecreasing.com/](https://thedecreasing.com/)
